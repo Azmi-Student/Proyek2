@@ -120,6 +120,32 @@ document.querySelectorAll(".progress-group").forEach((group) => {
     slider.addEventListener("input", updateProgress);
 });
 
+function updateDeskripsiKehamilan(trimester, minggu) {
+    const deskripsiEl = document.getElementById("deskripsiKehamilan");
+
+    if (!deskripsiEl) return;
+
+    if (minggu > 42) {
+        deskripsiEl.textContent =
+            "Mama telah menyelesaikan seluruh fase kehamilan. Selamat menanti kehadiran si kecil dengan penuh cinta. 👶💖";
+    } else {
+        switch (trimester) {
+            case 1:
+                deskripsiEl.textContent =
+                    "Mama sedang berada dalam trimester pertama. Perbanyak istirahat, konsumsi asam folat, dan jaga kondisi tubuh ya. 🌱";
+                break;
+            case 2:
+                deskripsiEl.textContent =
+                    "Mama telah memasuki trimester kedua. Jaga pola makan dan mulai rutin kontrol ke dokter. 💪";
+                break;
+            case 3:
+                deskripsiEl.textContent =
+                    "Mama berada di trimester ketiga. Perhatikan gerakan janin dan persiapkan proses persalinan. 🍼";
+                break;
+        }
+    }
+}
+
 // ========== Buka Popup Input HPHT ==========
 function bukaInputKehamilan() {
     Swal.fire({
@@ -212,8 +238,9 @@ function bukaInputKehamilan() {
                     }
                 );
 
-                window.latestKehamilanData = { hphtDate, formattedDue };
-                tampilkanSimulasiKehamilan(window.latestKehamilanData);
+                const simulasiData = { hphtDate, formattedDue };
+                tampilkanSimulasiKehamilan(simulasiData);
+                resetUIKehamilan();
                 return false;
             }
 
@@ -250,6 +277,7 @@ function bukaInputKehamilan() {
                 formattedDue,
             };
             window.latestKehamilanData = data;
+            
 
             document.getElementById("btnLihatInformasi").style.display =
                 "inline-block";
@@ -296,6 +324,7 @@ function bukaInputKehamilan() {
 
             updateSlider(".progress-slider.minggu", minggu, 42);
             updateSlider(".progress-slider.trimester", trimester, 3);
+            updateDeskripsiKehamilan(trimester, minggu);
         }
 
         if (result.dismiss === Swal.DismissReason.cancel) {
@@ -303,6 +332,30 @@ function bukaInputKehamilan() {
         }
     });
 }
+
+function resetUIKehamilan() {
+    document.querySelector(".judul-usia-kehamilan").textContent = "Isi Data Awal Kehamilan >";
+    document.querySelector(".tanggal-kehamilan").textContent = "-";
+    document.querySelector(".angka-besar").textContent = "-";
+    document.querySelector(".trimester-text").textContent = "-";
+    document.querySelector(".bulan-kehamilan").textContent = "-";
+    document.querySelector(".hari-kehamilan").textContent = "-";
+    document.getElementById("btnLihatInformasi").style.display = "none";
+    document.getElementById("deskripsiKehamilan").textContent = "";
+
+    const resetSlider = (selector) => {
+        const slider = document.querySelector(selector);
+        const group = slider.closest(".progress-group");
+        slider.value = 0;
+        group.querySelector(".progress-fill").style.width = "0%";
+        group.querySelector(".progress-icon").style.left = "-12px";
+        group.querySelector(".current-val").textContent = "0";
+    };
+
+    resetSlider(".progress-slider.minggu");
+    resetSlider(".progress-slider.trimester");
+}
+
 
 // ========== Saat Halaman Siap ==========
 document.addEventListener("DOMContentLoaded", function () {

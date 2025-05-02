@@ -115,9 +115,6 @@
 
 
                         <p class="kalender-kehamilan-deskripsi" id="deskripsiKehamilan">
-                            Saat ini Mama telah memasuki fase trimester kehamilan yang kedua. Tetap jaga kesehatan
-                            kehamilan dengan makan bergizi, istirahat cukup, dan konsultasi rutin dengan dokter. Pantau
-                            perkembangan janin Mama melalui fitur Kalender Kehamilan ini. 💖
                         </p>
 
 
