@@ -1,0 +1,498 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* Tidak bisa di-highlight atau dicopy */
+}
+
+img, a {
+    user-select: none; /* Tidak bisa diseleksi */
+    -webkit-user-drag: none; /* Mencegah drag di browser berbasis WebKit */
+}
+
+/* Layout dasar */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #FAFAFA;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.left-side {
+    flex: 2;
+    background: #FF3EA5;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Posisikan ke tengah vertikal */
+    padding-left: 50px; /* Geser teks ke kiri tanpa menempel */
+}
+
+.right-side {
+    flex: 1;  /* 1/3 bagian halaman */
+    background: #FAFAFA;
+    position: relative; /* Agar elemen di dalamnya bisa diatur dengan absolute */
+}
+
+/* Logo besar */
+.logo {
+    position: absolute;
+    top: 20px;      /* Lebih dekat ke atas */
+    left: 40px;     /* Tetap agak jauh dari kiri */
+    width: 320px;   /* Ukuran logo tetap besar */
+}
+
+/* Teks pada bagian kiri */
+.text {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 42px; /* Perbesar ukuran teks */
+    font-weight: 700; /* Lebih tebal */
+    max-width: 80%; /* Agar teks tidak terlalu panjang */
+}
+
+/* Tombol kembali */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #FF3EA5;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Jarak antara ikon dan teks */
+}
+
+/* Logo kecil di kanan */
+.small-logo {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: auto;
+}
+
+/* Teks Selamat Datang */
+.welcome-text {
+    position: absolute;
+    top: 28%; /* Naikkan teks sedikit */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    margin-bottom: 20px; /* atau 30px kalau mau lebih longgar */
+}
+
+.welcome-text h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #FF3EA5; /* Warna pink */
+    margin-bottom: 5px;
+}
+
+.welcome-text p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px; /* Ukuran font sedikit dikecilkan */
+    font-weight: 400;
+    color: #FF3EA5; /* Warna pink */
+    white-space: nowrap; /* Paksa teks tetap dalam satu baris */
+}
+
+/* Form register */
+.register-form {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    margin-top: 30px; /* tambahkan jarak dari welcome-text */
+}
+
+/* Wrapper untuk Input */
+.form-box {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* **Form Box dengan Border + Shadow** */
+.form-box input {
+    width: 100%;
+    height: 45px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    padding: 12px 10px 5px;
+    border-style: solid;
+    border-color: #FF3EA5;
+    border-width: 1px 5px 5px 1px; /* Atas & Kiri lebih tipis, Bawah & Kanan lebih tebal */
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Efek bayangan lembut */
+}
+
+/* Label Awalnya di Tengah Input (Seperti Placeholder) */
+.form-box label {
+    position: absolute;
+    left: 14px;
+    top: 50%; /* Awalnya di tengah input */
+    transform: translateY(-50%);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #999;
+    background: transparent;
+    padding: 0 5px;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+/* **Efek Floating Label + Border Effect** */
+.form-box input:focus + label,
+.form-box input:not(:placeholder-shown) + label {
+    top: 0px;
+    left: 5px;
+    font-size: 12px;
+    color: #FF3EA5;
+    background: #FAFAFA;
+    padding: 0 5px;
+}
+
+/* Outline Effect */
+.form-outline {
+    position: absolute;
+    inset: 0;
+    border-width: 1px 5px 5px 1px; /* Atas & Kiri lebih tipis, Bawah & Kanan tetap tebal */
+    border-color: #FF3EA5;
+    border-radius: 8px;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* **Menghilangkan Border Atas saat Label Naik** */
+.form-box input:focus ~ .form-outline,
+.form-box input:not(:placeholder-shown) ~ .form-outline {
+    border-width: 0 5px 5px 1px; /* Hilangkan border atas saat difokuskan */
+    border-color: #FF3EA5;
+    box-shadow: 3px 3px 10px rgba(255, 62, 165, 0.3); /* Lebih terang saat fokus */
+}
+
+/* **Eye Icon dalam Form Password** */
+.eye-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* **Warna Default Pink** */
+.eye-icon svg {
+    stroke: #FF3EA5; /* Warna pink */
+    width: 24px;
+    height: 24px;
+}
+
+/* **Efek Hover (Lebih Gelap)** */
+.eye-icon:hover svg {
+    stroke: #E63291; /* Pink lebih gelap saat dihover */
+}
+
+
+/* **Tombol Masuk dengan Border Khas** */
+.register-button {
+    width: 100%;
+    height: 50px;
+    background-color: #FF3EA5;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    border-style: solid;
+    border-color: #000; /* Warna border hitam */
+    border-width: 1px 5px 5px 1px; /* Atas: tipis, Kanan: tebal, Bawah: tebal, Kiri: tipis */
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* **Efek Hover: Warna Background Lebih Gelap** */
+.register-button:hover {
+    background-color: #E63291;
+}
+
+/* Teks di bawah form */
+.login-text {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 25px;
+}
+
+.login-link {
+    color: #FF3EA5;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* **Menu OR (Garis Kiri & Kanan + Teks di Tengah)** */
+.or-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 25px 0; /* Jarak lebih jauh dari elemen atas */
+    width: 100%;
+    position: relative;
+    top: 78%; /* Geser lebih ke bawah */
+}
+
+/* **Garis Kiri & Kanan** */
+.or-menu::before,
+.or-menu::after {
+    content: "";
+    flex: 0.4;
+    height: 2px;
+    background-color: #FF3EA5; /* Warna pink */
+    margin: 0 5px;
+}
+
+/* **Teks "OR"** */
+.or-menu span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    padding: 0 10px;
+}
+
+/* **Tombol register dengan Google** */
+.google-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* ⬅️ Hilangin underline bawaan <a> */
+    gap: 10px; /* Jarak antara ikon dan teks */
+    width: 300px; /* Sama dengan tombol lainnya */
+    height: 55px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+    background-color: white;
+    border-style: solid;
+    border-color: #FF3EA5;
+    border-width: 2px 6px 6px 2px; /* Tipis atas & kiri, tebal bawah & kanan */
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    top: 92%; /* Geser lebih ke bawah */
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* **Ikon Google dalam Tombol** */
+.google-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* **Efek Hover (Supaya Lebih Interaktif)** */
+.google-button:hover {
+    background-color: #FFE6F2; /* Warna pink muda saat hover */
+}
+
+.google-button:active {
+    background-color: #FFC4E1; /* Lebih gelap saat ditekan */
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-side {
+        display: none;
+    }
+
+    .right-side {
+        flex: 1;
+        width: 100vw;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: static;
+    }
+
+    .small-logo {
+        position: static;
+        transform: none;
+        margin-bottom: 20px;
+    }
+
+    .welcome-text {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .register-form {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .login-text {
+        position: static;
+        transform: none;
+        margin-top: 20px;
+    }
+
+
+    .or-menu {
+        position: static;
+        transform: none;
+        margin: 20px 0;
+    }
+
+    .google-button {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: 350px;
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        position: static;
+        margin-bottom: 15px;
+        align-self: flex-start;
+    }
+}
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-error-popup {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 540px;         /* ⬅️ dari 500 → 540 (atau 550) */
+    min-height: 300px;
+    position: relative;
+
+    animation: fadeIn 0.4s ease forwards;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeOut {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+
+.popup-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 1.5rem; /* geser semua isi popup agak ke bawah */
+}
+
+.popup-text {
+    flex: 1;
+    text-align: center;
+}
+
+.popup-text h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem; /* pastikan ini cukup, atau naikkan jadi 1.2rem */
+    color: #FF3EA5;
+}
+
+.popup-text p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.9; /* atau 2 kalau ingin lebih lega */
+    color: #FF3EA5;
+    margin-top: 0.8rem; /* tambahin margin top supaya isi agak turun */
+}
+
+
+.popup-img img {
+    width: 130px;          /* dari 100/110 jadi 130px */
+    height: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff3e3e;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.2) rotate(90deg);
+    color: #ff0000;
+}
+
