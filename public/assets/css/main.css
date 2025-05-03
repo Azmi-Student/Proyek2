@@ -191,15 +191,17 @@
 .jadwal-box {
   flex: 1;
   background-color: #fff;
-  border-radius: 40px;
+  border-radius: 30px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  padding: 32px;
-  height: 160px;
-  text-align: center;
+  padding: 24px;
+  height: auto; /* auto saja, supaya fleksibel */
+  min-height: 240px; /* biar sejajar dengan kalender */
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
+
 
 .jadwal-text {
   font-size: 18px;
@@ -224,24 +226,27 @@
 
 .kalender-box {
   background-color: #fff;
-  border-radius: 40px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(255, 62, 165, 0.1);
   padding: 16px;
-  width: 360px;
-  height: 190px; /* diperbesar sedikit */
-  margin: 0;
-  text-align: center;
+  width: 100%;
+  max-width: 360px;
   font-family: 'Poppins', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  min-height: 260px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.kalender-box:hover {
+  transform: translateY(-4px);
 }
 
 .kalender-header {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: #FF3EA5;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .kalender-grid {
@@ -249,23 +254,77 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 6px;
   font-size: 12px;
-  color: #333;
-  justify-content: center;
+  color: #444;
+  text-align: center;
 }
 
-.kalender-grid div {
-  padding: 5px 0;
-  border-radius: 6px;
-  background-color: #FBE7F2;
+.kalender-grid .day-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #FF3EA5;
 }
+
+.kalender-grid .date {
+  padding: 4px 0;
+  border-radius: 5px;
+  background-color: #FDE7F3;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.kalender-grid .date:hover {
+  background-color: #ffc9df;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.kalender-grid .today {
+  background-color: #ff6fb7 !important;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255, 62, 165, 0.2);
+}
+
+.kalender-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.kalender-nav {
+  background-color: #FF3EA5;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.kalender-nav:hover {
+  background-color: #e63394;
+}
+
+.kalender-grid .weekend {
+  color: #aaa;
+  font-weight: 600;
+}
+
 
 .jadwal-kalender-wrapper {
   display: flex;
   justify-content: space-between;
+  align-items: stretch; /* ⬅ ganti dari flex-start ke stretch */
   gap: 20px;
   max-width: 1000px;
   margin: 0 auto 32px auto;
+  flex-wrap: wrap; /* ⬅️ biar responsif saat layar kecil */
 }
+
 
 .aktivitas-mama {
   background-color: #fff;
@@ -302,30 +361,22 @@
   justify-content: flex-start;
 }
 
-.aktivitas-kotak {
+.aktivitas-gambar {
   width: 140px;
   height: 200px;
-  background-color: #fff; /* putih sebagai base */
-  border: 3px solid #FF3EA5; /* garis pink luar */
-  border-radius: 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-end; /* isi naik ke atas */
-  justify-content: center;
-  padding-bottom: 8px; /* supaya ada ruang di bawah */
+  object-fit: contain; /* ⬅️ UBAH DARI cover KE contain */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
 }
 
-.aktivitas-inner {
-  width: 120px;
-  height: 170px;
-  background-color: #FF3EA5; /* isi utama warna pink tua */
-  border-radius: 16px;
-}
-
-.aktivitas-kotak:hover {
+.aktivitas-gambar:hover {
   transform: translateY(-6px) scale(1.03);
   box-shadow: 0 8px 20px rgba(255, 62, 165, 0.3);
 }
+
+
+
 
 .artikel-mama {
   background-color: #fff;

@@ -120,32 +120,6 @@ document.querySelectorAll(".progress-group").forEach((group) => {
     slider.addEventListener("input", updateProgress);
 });
 
-function updateDeskripsiKehamilan(trimester, minggu) {
-    const deskripsiEl = document.getElementById("deskripsiKehamilan");
-
-    if (!deskripsiEl) return;
-
-    if (minggu > 42) {
-        deskripsiEl.textContent =
-            "Mama telah menyelesaikan seluruh fase kehamilan. Selamat menanti kehadiran si kecil dengan penuh cinta. 👶💖";
-    } else {
-        switch (trimester) {
-            case 1:
-                deskripsiEl.textContent =
-                    "Mama sedang berada dalam trimester pertama. Perbanyak istirahat, konsumsi asam folat, dan jaga kondisi tubuh ya. 🌱";
-                break;
-            case 2:
-                deskripsiEl.textContent =
-                    "Mama telah memasuki trimester kedua. Jaga pola makan dan mulai rutin kontrol ke dokter. 💪";
-                break;
-            case 3:
-                deskripsiEl.textContent =
-                    "Mama berada di trimester ketiga. Perhatikan gerakan janin dan persiapkan proses persalinan. 🍼";
-                break;
-        }
-    }
-}
-
 // ========== Buka Popup Input HPHT ==========
 function bukaInputKehamilan() {
     Swal.fire({
@@ -220,11 +194,17 @@ function bukaInputKehamilan() {
             const tanggal = document.getElementById("inputTanggalHPHT").value;
             if (!tanggal) {
                 Swal.showValidationMessage("🛑 Tanggal HPHT wajib diisi.");
+                return false;
             }
 
             const [day, month, year] = tanggal.split("-").map(Number);
             const hphtDate = new Date(year, month - 1, day);
             const today = new Date();
+
+            if (isNaN(hphtDate.getTime())) {
+                Swal.showValidationMessage("❌ Format tanggal tidak valid.");
+                return false;
+            }
 
             if (hphtDate > today) {
                 const dueDateSimulasi = new Date(hphtDate);
@@ -238,9 +218,16 @@ function bukaInputKehamilan() {
                     }
                 );
 
-                const simulasiData = { hphtDate, formattedDue };
-                tampilkanSimulasiKehamilan(simulasiData);
+                const userKey = `hpht_user_${window.currentUserId}`;
+                localStorage.removeItem(userKey);
+
+                // Kosongkan UI
+                window.latestKehamilanData = null;
+                document.getElementById("btnLihatInformasi").style.display =
+                    "none";
                 resetUIKehamilan();
+
+                tampilkanSimulasiKehamilan({ hphtDate, formattedDue });
                 return false;
             }
 
@@ -250,6 +237,54 @@ function bukaInputKehamilan() {
         if (result.isConfirmed) {
             const [day, month, year] = result.value.split("-").map(Number);
             const hphtDate = new Date(year, month - 1, day);
+            // Di dalam result.isConfirmed
+            fetch("/kehamilan", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content,
+                },
+                body: JSON.stringify({
+                    hpht: `${year}-${String(month).padStart(2, "0")}-${String(
+                        day
+                    ).padStart(2, "0")}`,
+                }),
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    if (!res.success) {
+                        Swal.fire(
+                            "Gagal!",
+                            res.message || "Data tidak valid.",
+                            "error"
+                        );
+                    } else {
+                        // Simpan ke localStorage agar tidak muncul popup lagi
+                        if (hphtDate <= today) {
+                            const hphtString = `${year}-${String(
+                                month
+                            ).padStart(2, "0")}-${String(day).padStart(
+                                2,
+                                "0"
+                            )}`;
+                            const userKey = getUserKey();
+                            if (!userKey) return;
+
+                            localStorage.setItem(userKey, hphtString);
+                        } else {
+                            const userKey = getUserKey();
+                            if (!userKey) return;
+
+                            localStorage.removeItem(userKey);
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.error("Fetch error:", err);
+                });
+
             const today = new Date();
 
             const diffTime = today.getTime() - hphtDate.getTime();
@@ -277,7 +312,6 @@ function bukaInputKehamilan() {
                 formattedDue,
             };
             window.latestKehamilanData = data;
-            
 
             document.getElementById("btnLihatInformasi").style.display =
                 "inline-block";
@@ -324,94 +358,263 @@ function bukaInputKehamilan() {
 
             updateSlider(".progress-slider.minggu", minggu, 42);
             updateSlider(".progress-slider.trimester", trimester, 3);
-            updateDeskripsiKehamilan(trimester, minggu);
         }
 
         if (result.dismiss === Swal.DismissReason.cancel) {
             window.location.href = "/";
         }
+        // ⬇️ Tambahkan baris ini supaya tombol aktif lagi
+        pasangEventTombol();
     });
 }
 
-function resetUIKehamilan() {
-    document.querySelector(".judul-usia-kehamilan").textContent = "Isi Data Awal Kehamilan >";
-    document.querySelector(".tanggal-kehamilan").textContent = "-";
-    document.querySelector(".angka-besar").textContent = "-";
-    document.querySelector(".trimester-text").textContent = "-";
-    document.querySelector(".bulan-kehamilan").textContent = "-";
-    document.querySelector(".hari-kehamilan").textContent = "-";
-    document.getElementById("btnLihatInformasi").style.display = "none";
-    document.getElementById("deskripsiKehamilan").textContent = "";
+function updateUI(data) {
+    document.querySelector(".judul-usia-kehamilan").textContent =
+        "Usia Kehamilan";
+    document.querySelector(
+        ".tanggal-kehamilan"
+    ).textContent = `Tanggal HPHT: ${data.hphtDate.toLocaleDateString(
+        "id-ID"
+    )}`;
+    document.querySelector(
+        ".angka-besar"
+    ).textContent = `${data.minggu} Minggu ${data.hari} Hari`;
+    document.querySelector(
+        ".trimester-text"
+    ).textContent = `Trimester ${data.trimester}`;
+    document.querySelector(
+        ".bulan-kehamilan"
+    ).textContent = `Bulan ke ${data.bulan}`;
+    document.querySelector(
+        ".hari-kehamilan"
+    ).textContent = `Hari ke ${data.diffDays}`;
 
-    const resetSlider = (selector) => {
+    document.getElementById("btnLihatInformasi").style.display = "inline-block";
+    updateDeskripsiKehamilan(data.trimester, data.minggu);
+
+    const updateSlider = (selector, value, max) => {
         const slider = document.querySelector(selector);
+        if (!slider) return; // untuk jaga-jaga
+
         const group = slider.closest(".progress-group");
+        slider.value = Math.min(value, max);
+        group.querySelector(".progress-fill").style.width = `${
+            (value / max) * 100
+        }%`;
+        group.querySelector(".progress-icon").style.left = `calc(${
+            (value / max) * 100
+        }% - 12px)`;
+        group.querySelector(".current-val").textContent = slider.value;
+    };
+
+    updateSlider(".progress-slider.minggu", data.minggu, 42);
+    updateSlider(".progress-slider.trimester", data.trimester, 3);
+
+    // Tunggu tombol muncul, lalu pasang event
+    tungguTombolLaluPasang();
+}
+
+function hitungDataKehamilan(hphtDate) {
+    const today = new Date();
+    const diffTime = today - hphtDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const minggu = Math.floor(diffDays / 7);
+    const hari = diffDays % 7;
+    const bulan = Math.floor(minggu / 4) + 1;
+    const trimester = minggu <= 13 ? 1 : minggu <= 27 ? 2 : 3;
+
+    const dueDate = new Date(hphtDate);
+    dueDate.setDate(dueDate.getDate() + 280);
+    const formattedDue = dueDate.toLocaleDateString("id-ID", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
+    return {
+        hphtDate,
+        minggu,
+        hari,
+        bulan,
+        trimester,
+        diffDays,
+        formattedDue,
+    };
+}
+
+function tungguTombolLaluPasang() {
+    const interval = setInterval(() => {
+        const btnEdit = document.getElementById("btnEditData");
+        const btnInfo = document.getElementById("btnLihatInformasi");
+
+        if (btnEdit && btnInfo) {
+            clearInterval(interval);
+            console.log("Tombol ditemukan, pasang event.");
+            pasangEventTombol(); // ini yang penting
+        }
+    }, 50);
+}
+
+function updateDeskripsiKehamilan(trimester, minggu) {
+    const deskripsiEl = document.querySelector(".deskripsi-kehamilan"); // pastikan elemen ini ada di HTML
+    if (!deskripsiEl) return;
+
+    let deskripsi = "";
+
+    if (trimester === 1) {
+        if (minggu <= 4) {
+            deskripsi = "Sel telur telah dibuahi. Tubuh mulai beradaptasi.";
+        } else if (minggu <= 8) {
+            deskripsi =
+                "Pembentukan organ vital dimulai. Asupan asam folat sangat penting.";
+        } else {
+            deskripsi =
+                "Detak jantung janin mulai terdengar. Tetap jaga nutrisi dan istirahat.";
+        }
+    } else if (trimester === 2) {
+        if (minggu <= 20) {
+            deskripsi =
+                "Janin mulai bergerak. Saatnya mulai rutin kontrol kehamilan.";
+        } else {
+            deskripsi =
+                "Organ janin berkembang pesat. Perhatikan konsumsi zat besi.";
+        }
+    } else if (trimester === 3) {
+        if (minggu <= 36) {
+            deskripsi = "Persiapan kelahiran dimulai. Janin semakin aktif.";
+        } else {
+            deskripsi =
+                "Janin siap dilahirkan. Siapkan perlengkapan persalinan dan konsultasi akhir.";
+        }
+    } else {
+        deskripsi = "Data kehamilan di luar rentang normal.";
+    }
+
+    deskripsiEl.textContent = deskripsi;
+}
+
+function pasangEventTombol() {
+    const btnEdit = document.getElementById("btnEditData");
+    const btnInfo = document.getElementById("btnLihatInformasi");
+
+    if (btnEdit) {
+        btnEdit.onclick = bukaInputKehamilan;
+    }
+
+    if (btnInfo) {
+        btnInfo.onclick = () => {
+            const data = window.latestKehamilanData;
+            if (!data || !data.hphtDate) return; // ⛔ Amanin dulu
+
+            const today = new Date();
+            if (data.hphtDate > today) return tampilkanSimulasiKehamilan(data);
+            if (data.minggu > 42) return tampilkanFaseKelahiran(data);
+
+            tampilkanInformasiKehamilan(data);
+            pasangEventTombol(); // panggil lagi untuk jaga-jaga
+        };
+    }
+}
+
+function resetUIKehamilan() {
+    document.querySelector(".judul-usia-kehamilan").textContent =
+        "Usia Kehamilan";
+    document.querySelector(".tanggal-kehamilan").textContent =
+        "Tanggal HPHT: —";
+    document.querySelector(".angka-besar").textContent = "—";
+    document.querySelector(".trimester-text").textContent = "Trimester —";
+    document.querySelector(".bulan-kehamilan").textContent = "Bulan ke —";
+    document.querySelector(".hari-kehamilan").textContent = "Hari ke —";
+
+    const resetSlider = (selector, max) => {
+        const slider = document.querySelector(selector);
+        if (!slider) return;
         slider.value = 0;
+        const group = slider.closest(".progress-group");
         group.querySelector(".progress-fill").style.width = "0%";
         group.querySelector(".progress-icon").style.left = "-12px";
         group.querySelector(".current-val").textContent = "0";
     };
 
-    resetSlider(".progress-slider.minggu");
-    resetSlider(".progress-slider.trimester");
+    resetSlider(".progress-slider.minggu", 42);
+    resetSlider(".progress-slider.trimester", 3);
+
+    const deskripsiEl = document.querySelector(".deskripsi-kehamilan");
+    if (deskripsiEl) deskripsiEl.textContent = "Belum ada data kehamilan.";
 }
 
+function getUserKey() {
+    if (typeof window.currentUserId === "undefined") {
+        console.error("❌ currentUserId belum tersedia.");
+        return null;
+    }
+    return `hpht_user_${window.currentUserId}`;
+}
 
 // ========== Saat Halaman Siap ==========
 document.addEventListener("DOMContentLoaded", function () {
-    const hphtSebelumnya = localStorage.getItem("hpht");
+    if (typeof window.currentUserId === "undefined") {
+        console.error("❌ currentUserId tidak tersedia.");
+        return;
+    }
+
+    const userKey = getUserKey();
+    if (!userKey) return;
+        const hphtSebelumnya = localStorage.getItem(userKey);
+
+    function jalankanDenganData(hphtDate) {
+        const hasil = hitungDataKehamilan(hphtDate);
+        window.latestKehamilanData = hasil;
+        updateUI(hasil);
+    }
 
     if (hphtSebelumnya) {
         const [year, month, day] = hphtSebelumnya.split("-").map(Number);
         const hphtDate = new Date(year, month - 1, day);
-        const today = new Date();
 
-        const diffTime = today - hphtDate;
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        const minggu = Math.floor(diffDays / 7);
-        const hari = diffDays % 7;
-        const bulan = Math.floor(minggu / 4) + 1;
-        const trimester = minggu <= 13 ? 1 : minggu <= 27 ? 2 : 3;
-
-        const dueDate = new Date(hphtDate);
-        dueDate.setDate(dueDate.getDate() + 280);
-        const formattedDue = dueDate.toLocaleDateString("id-ID", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
-
-        const hasil = {
-            hphtDate,
-            minggu,
-            hari,
-            bulan,
-            trimester,
-            diffDays,
-            formattedDue,
-        };
-
-        window.latestKehamilanData = hasil;
-
-        tampilkanInformasiKehamilan(hasil);
-        updateUI(hasil);
+        if (!isNaN(hphtDate.getTime())) {
+            jalankanDenganData(hphtDate);
+        } else {
+            localStorage.removeItem(userKey); // kalau rusak
+            bukaInputKehamilan();
+            pasangEventTombol();
+            resetUIKehamilan(); // <- reset tampilan
+        }
     } else {
-        bukaInputKehamilan();
+        fetch("/kehamilan")
+            .then((res) => res.json())
+            .then((data) => {
+                if (data && data.hpht) {
+                    const [year, month, day] = data.hpht.split("-").map(Number);
+                    const hphtDate = new Date(year, month - 1, day);
+
+                    if (!isNaN(hphtDate.getTime())) {
+                        // ✨ Sinkronkan localStorage
+                        const localHpht = localStorage.getItem(userKey); // ✅ BENAR
+                        const dbHphtFormatted = `${year}-${String(
+                            month
+                        ).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+                        if (localHpht !== dbHphtFormatted) {
+                            localStorage.setItem(userKey, dbHphtFormatted);
+                        }
+
+                        jalankanDenganData(hphtDate);
+                    } else {
+                        localStorage.removeItem(userKey);
+                        bukaInputKehamilan();
+                        pasangEventTombol();
+                    }
+                } else {
+                    localStorage.removeItem(userKey); // pastikan kosong
+                    bukaInputKehamilan();
+                    pasangEventTombol();
+                }
+            })
+            .catch((err) => {
+                console.error("Gagal ambil data kehamilan:", err);
+                bukaInputKehamilan();
+                pasangEventTombol();
+            });
     }
-
-    document
-        .getElementById("btnEditData")
-        .addEventListener("click", bukaInputKehamilan);
-
-    document
-        .getElementById("btnLihatInformasi")
-        .addEventListener("click", () => {
-            const data = window.latestKehamilanData;
-            if (!data) return;
-
-            const today = new Date();
-            if (data.hphtDate > today) return tampilkanSimulasiKehamilan(data);
-            if (data.minggu > 42) return tampilkanFaseKelahiran(data);
-            tampilkanInformasiKehamilan(data);
-        });
 });

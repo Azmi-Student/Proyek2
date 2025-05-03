@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\NutrisiController;
+use App\Http\Controllers\KehamilanController;
 
 Route::get('/', function () {
     return view('main');
@@ -29,3 +30,8 @@ Route::get('/reservasi-dokter', function () {
 })->middleware('auth');
 
 Route::get('/api/nutrisi', [NutrisiController::class, 'getNutrisi']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/kehamilan', [KehamilanController::class, 'ambil']);
+    Route::post('/kehamilan', [KehamilanController::class, 'simpan']);
+});

@@ -34,7 +34,8 @@
             </div>
 
             <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon" class="sidebar-icon" />
+                <img src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon"
+                    class="sidebar-icon" />
                 <span class="sidebar-text">Pengaturan</span>
             </div>
         </div>
@@ -76,11 +77,13 @@
 
                     <div class="fitur-container">
                         <a href="{{ url('/kalender-kehamilan') }}" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-kalender.png') }}" alt="Kalender Kehamilan" class="fitur-icon" />
+                            <img src="{{ asset('assets/images/fitur-kalender.png') }}" alt="Kalender Kehamilan"
+                                class="fitur-icon" />
                             <p class="fitur-label">Kalender<br>Kehamilan</p>
                         </a>
                         <a href="{{ url('/reservasi-dokter') }}" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-reservasi.png') }}" alt="Kalender Kehamilan" class="fitur-icon" />
+                            <img src="{{ asset('assets/images/fitur-reservasi.png') }}" alt="Kalender Kehamilan"
+                                class="fitur-icon" />
                             <p class="fitur-label">Reservasi<br>Dokter</p>
                         </a>
                         <a href="#" class="fitur-item">
@@ -108,19 +111,23 @@
             <div class="jadwal-kalender-wrapper">
                 <div class="jadwal-box">
                     <div class="jadwal-content">
-                        <img src="{{ asset('assets/images/icon-jadwal.png') }}" alt="Icon Jadwal" class="jadwal-icon" />
+                        <img src="{{ asset('assets/images/icon-jadwal.png') }}" alt="Icon Jadwal"
+                            class="jadwal-icon" />
                         <p class="jadwal-text">Tidak ada jadwal hari ini</p>
                     </div>
                 </div>
 
                 <div class="kalender-box">
-                    <div class="kalender-header">
-                        <span id="bulan"></span> <span id="tahun"></span>
+                    <div class="kalender-header-wrapper">
+                      <button class="kalender-nav prev">&larr;</button>
+                      <div class="kalender-header" id="kalenderHeader">Mei 2025</div>
+                      <button class="kalender-nav next">&rarr;</button>
                     </div>
-                    <div class="kalender-grid" id="kalender-grid">
-                        <!-- Tanggal-tanggal akan dirender di sini pakai JS -->
+                    <div class="kalender-grid" id="kalenderGrid">
+                      <!-- Diisi lewat JavaScript -->
                     </div>
-                </div>
+                  </div>
+                  
             </div>
 
             <div class="aktivitas-mama">
@@ -128,22 +135,27 @@
                 <div class="aktivitas-mama-line"></div>
 
                 <div class="aktivitas-kotak-container">
-                    <div class="aktivitas-kotak">
-                        <div class="aktivitas-inner"></div>
-                    </div>
-                    <div class="aktivitas-kotak">
-                        <div class="aktivitas-inner"></div>
-                    </div>
-                    <div class="aktivitas-kotak">
-                        <div class="aktivitas-inner"></div>
-                    </div>
-                    <div class="aktivitas-kotak">
-                        <div class="aktivitas-inner"></div>
-                    </div>
-                    <div class="aktivitas-kotak">
-                        <div class="aktivitas-inner"></div>
-                    </div>
+                    <img src="{{ asset('assets/images/aktivitas-1.png') }}" alt="Senam Hamil Bola Fitnes"
+                        class="aktivitas-gambar" data-video="https://www.youtube.com/embed/IFcuN9z7X04">
+
+                    <img src="{{ asset('assets/images/aktivitas-2.png') }}" alt="Aktivitas 2"
+                        class="aktivitas-gambar" data-video="https://www.youtube.com/embed/C2ds5O8ghiA">
+
+                    <img src="{{ asset('assets/images/aktivitas-3.png') }}" alt="Aktivitas 3"
+                        class="aktivitas-gambar" data-video="https://www.youtube.com/embed/T0ElRyCPeQo">
+
+                    <img src="{{ asset('assets/images/aktivitas-4.png') }}" alt="Aktivitas 4"
+                        class="aktivitas-gambar" data-video="https://www.youtube.com/embed/o0bcQUBbJbw">
+
+                    <img src="{{ asset('assets/images/aktivitas-5.png') }}" alt="Aktivitas 5"
+                        class="aktivitas-gambar" data-video="https://www.youtube.com/embed/c47ONTAvo3E">
+
+                    <img src="{{ asset('assets/images/aktivitas-6.png') }}" alt="Aktivitas 6"
+                        class="aktivitas-gambar" data-video="https://www.youtube.com/embed/nBfbJ-3tUdc">
+
                 </div>
+
+
             </div>
 
             <div class="artikel-mama">
@@ -155,7 +167,8 @@
                         <img src="{{ asset('assets/images/artikel-1.png') }}" alt="Artikel" class="artikel-img" />
 
                         <div class="artikel-label">
-                            <img src="{{ asset('assets/images/icon-artikel.png') }}" alt="Icon Artikel" class="artikel-icon" />
+                            <img src="{{ asset('assets/images/icon-artikel.png') }}" alt="Icon Artikel"
+                                class="artikel-icon" />
                             <span>Artikel</span>
                         </div>
 
@@ -179,7 +192,8 @@
                         <img src="{{ asset('assets/images/artikel-2.png') }}" alt="Artikel" class="artikel-img" />
 
                         <div class="artikel-label">
-                            <img src="{{ asset('assets/images/icon-artikel.png') }}" alt="Icon Artikel" class="artikel-icon" />
+                            <img src="{{ asset('assets/images/icon-artikel.png') }}" alt="Icon Artikel"
+                                class="artikel-icon" />
                             <span>Artikel</span>
                         </div>
 
@@ -203,7 +217,8 @@
                         <img src="{{ asset('assets/images/artikel-3.png') }}" alt="Artikel" class="artikel-img" />
 
                         <div class="artikel-label">
-                            <img src="{{ asset('assets/images/icon-artikel.png') }}" alt="Icon Artikel" class="artikel-icon" />
+                            <img src="{{ asset('assets/images/icon-artikel.png') }}" alt="Icon Artikel"
+                                class="artikel-icon" />
                             <span>Artikel</span>
                         </div>
 
@@ -236,8 +251,12 @@
 
         </div>
     </div>
+
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </body>
 
-<script src="{{ asset('assets/js/main.js') }}"></script>
 
 </html>
