@@ -71,7 +71,8 @@
                 <div class="pink-shimmer"></div>
                 <img src="{{ asset('assets/images/hero-panel.png') }}" alt="Puzzle Pattern" class="puzzle-img" />
                 <div class="pink-text">
-                    <h2>Hai <span id="username">[{{ Auth::user()->name }}]</span></h2>
+                    <h2>Hai, <strong>{{ Auth::user()->name }}</strong>
+                    </h2>
 
                     <p>Nikmati kemudahan memantau kehamilan dengan layanan terpercaya untuk kesehatan ibu!</p>
 

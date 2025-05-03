@@ -76,6 +76,7 @@
   overflow: hidden;
 }
 
+
 .puzzle-img {
   position: absolute;
   top: 0;
@@ -179,13 +180,14 @@
 
 .ibu-hamil {
   position: absolute;
-  top: 5%;
+  top: 0%;               /* ⬅️ naik lebih ke atas */
   right: 40px;
-  transform: translateY(-50%);
+  transform: translateY(-30%); /* ⬅️ dikurangi efek turunnya */
   height: 220px;
   z-index: 2;
   object-fit: contain;
 }
+
 
 
 .jadwal-box {

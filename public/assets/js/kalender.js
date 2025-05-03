@@ -2,66 +2,59 @@
 
 // Tampilan 3 kolom kehamilan
 function tampilkanInformasiKehamilan(data) {
-    Swal.fire({
-        title: "🍼 Informasi Kehamilan & Nutrisi",
-        html: `
-            <div style="display: flex; gap: 30px; text-align: left; font-size: 16px; max-height: 600px; overflow-y: auto;">
-                <div style="flex: 1;">
-                    <h3 style="font-size: 18px; font-weight: bold;">📄 Info Kehamilan</h3>
-                    <p><strong>📅 Tanggal HPHT:</strong><br><span style="font-size: 17px; font-weight: bold;">${data.hphtDate.toLocaleDateString(
-                        "id-ID"
-                    )}</span></p>
-                    <p><strong>⏳ Usia Kehamilan:</strong><br><span style="font-size: 20px; font-weight: bold; color: #d63384;">${
-                        data.minggu
-                    } Minggu ${data.hari} Hari</span></p>
-                    <p><strong>👶 Perkiraan Lahir:</strong><br><span style="font-size: 18px; font-weight: bold;">${
-                        data.formattedDue
-                    }</span></p>
-                    <p><strong>🌱 Trimester:</strong><br>Trimester ${
-                        data.trimester
-                    }</p>
-                    <p><strong>📆 Bulan Ke:</strong><br>${data.bulan}</p>
-                    <p><strong>📈 Hari Ke:</strong><br>${data.diffDays}</p>
-                </div>
-                <div style="flex: 1;">
-                    <h3 style="font-size: 18px; font-weight: bold;">🥗 Panduan Nutrisi</h3>
-                    <p><strong>📆 Hari ke-${
-                        data.diffDays
-                    }:</strong><br>Jaga pola makan dan tetap aktif.</p>
-                    <p><strong>📅 Minggu ke-${
-                        data.minggu
-                    }:</strong><br>Pertahankan gizi seimbang dan tidur cukup.</p>
-                    <p><strong>🗓️ Bulan ke-${
-                        data.bulan
-                    }:</strong><br>Rutin kontrol dan pantau kondisi tubuh.</p>
-                    <p><strong>👶 Trimester ${
-                        data.trimester
-                    }:</strong><br>Fokus konsumsi asam folat, vitamin B, dan zat besi.</p>
-                </div>
-                <div style="flex: 1;">
-                    <h3 style="font-size: 18px; font-weight: bold;">✅ Rekomendasi</h3>
-                    <p><strong>🥦 Makanan Dianjurkan:</strong></p>
-                    <ul style="margin-left: 20px;">
-                        <li>Sayuran hijau</li>
-                        <li>Kacang-kacangan</li>
-                        <li>Buah segar</li>
-                        <li>Daging tanpa lemak</li>
-                    </ul>
-                    <p><strong>⚠️ Makanan Dihindari:</strong></p>
-                    <ul style="margin-left: 20px;">
-                        <li>Makanan mentah</li>
-                        <li>Minuman beralkohol</li>
-                        <li>Kafein berlebihan</li>
-                    </ul>
-                </div>
-            </div>
-        `,
-        width: 950,
-        icon: "info",
-        confirmButtonColor: "#e75480",
-        confirmButtonText: "Oke",
-    });
+    fetch(`/api/nutrisi?trimester=${data.trimester}&bulan=${data.bulan}&minggu=${data.minggu}&hari=${data.diffDays}`)
+        .then((res) => res.json())
+        .then((nutrisi) => {
+            if (nutrisi.selesai) return tampilkanFaseKelahiran(data);
+
+            const rekomendasiList = nutrisi.rekomendasi.map(item => `<li>${item}</li>`).join("");
+            const hindariList = nutrisi.hindari.map(item => `<li>${item}</li>`).join("");
+
+            Swal.fire({
+                title: "🍼 Informasi Kehamilan & Nutrisi",
+                html: `
+                    <div style="display: flex; gap: 30px; text-align: left; font-size: 16px; max-height: 600px; overflow-y: auto;">
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 18px; font-weight: bold;">📄 Info Kehamilan</h3>
+                            <p><strong>📅 Tanggal HPHT:</strong><br><span style="font-size: 17px; font-weight: bold;">${data.hphtDate.toLocaleDateString("id-ID")}</span></p>
+                            <p><strong>⏳ Usia Kehamilan:</strong><br><span style="font-size: 20px; font-weight: bold; color: #d63384;">${data.minggu} Minggu ${data.hari} Hari</span></p>
+                            <p><strong>👶 Perkiraan Lahir:</strong><br><span style="font-size: 18px; font-weight: bold;">${data.formattedDue}</span></p>
+                            <p><strong>🌱 Trimester:</strong><br>Trimester ${data.trimester}</p>
+                            <p><strong>📆 Bulan Ke:</strong><br>${data.bulan}</p>
+                            <p><strong>📈 Hari Ke:</strong><br>${data.diffDays}</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 18px; font-weight: bold;">🥗 Panduan Nutrisi</h3>
+                            <p><strong>📆 Hari ke-${data.diffDays}:</strong><br>${nutrisi.harian}</p>
+                            <p><strong>📅 Minggu ke-${data.minggu}:</strong><br>${nutrisi.mingguan}</p>
+                            <p><strong>🗓️ Bulan ke-${data.bulan}:</strong><br>${nutrisi.bulanan}</p>
+                            <p><strong>👶 Trimester ${data.trimester}:</strong><br>${nutrisi.panduan_trimester}</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 18px; font-weight: bold;">✅ Rekomendasi</h3>
+                            <p><strong>🥦 Makanan Dianjurkan:</strong></p>
+                            <ul style="margin-left: 20px;">${rekomendasiList}</ul>
+                            <p><strong>⚠️ Makanan Dihindari:</strong></p>
+                            <ul style="margin-left: 20px;">${hindariList}</ul>
+                        </div>
+                    </div>
+                `,
+                width: 950,
+                icon: "info",
+                confirmButtonColor: "#e75480",
+                confirmButtonText: "Oke",
+            });
+        })
+        .catch((err) => {
+            console.error("❌ Gagal mengambil data nutrisi:", err);
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memuat data nutrisi",
+                text: "Terjadi kesalahan saat menghubungi server.",
+            });
+        });
 }
+
 
 // Tampilan masa kehamilan selesai (minggu > 42)
 function tampilkanFaseKelahiran(data) {
@@ -560,7 +553,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const userKey = getUserKey();
     if (!userKey) return;
-        const hphtSebelumnya = localStorage.getItem(userKey);
+    const hphtSebelumnya = localStorage.getItem(userKey);
 
     function jalankanDenganData(hphtDate) {
         const hasil = hitungDataKehamilan(hphtDate);
