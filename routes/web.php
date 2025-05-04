@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\NutrisiController;
 use App\Http\Controllers\KehamilanController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('main');
@@ -34,4 +36,15 @@ Route::get('/api/nutrisi', [NutrisiController::class, 'getNutrisi']);
 Route::middleware('auth')->group(function () {
     Route::get('/kehamilan', [KehamilanController::class, 'ambil']);
     Route::post('/kehamilan', [KehamilanController::class, 'simpan']);
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    // Halaman dashboard admin
+    Route::get('/', [UserController::class, 'index'])->name('admin.dashboard');
+
+    // Manajemen pengguna
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });

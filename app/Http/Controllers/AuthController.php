@@ -28,6 +28,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user', // ⬅️ default
         ]);
 
         return redirect('/register')->with('register_success', true);
@@ -50,13 +51,20 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/');
+
+            // 🔍 Cek role user setelah login
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return redirect('/'); // user biasa
         }
 
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ]);
     }
+
 
     public function logout(Request $request)
     {
@@ -67,6 +75,4 @@ class AuthController extends Controller
 
         return redirect('/login');
     }
-
 }
-
