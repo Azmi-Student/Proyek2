@@ -1,60 +1,95 @@
-function showForm() {
-    document.getElementById('dokterList').style.display = 'none';
-    document.getElementById('formReservasi').style.display = 'block';
-    document.getElementById('petunjukReservasi').style.display = 'none';
+function showForm(event) {
+    document.getElementById("dokterList").style.display = "none";
+    document.getElementById("formReservasi").style.display = "block";
+    document.getElementById("petunjukReservasi").style.display = "none";
+    document.getElementById("tabelReservasi").style.display = "none"; // ⬅️ Tambahkan ini
 
-    const card = event.target.closest('.dokter-card');
-    const nama = card.querySelector('h3').innerText;
-    const deskripsi = card.querySelector('p').innerText;
-    const gambarSrc = card.querySelector('img').src;
+    const card = event.target.closest(".dokter-card");
+    const nama = card.querySelector("h3").innerText;
+    const deskripsi = card.querySelector("p").innerText;
+    const gambarSrc = card.querySelector("img").src;
 
-    document.getElementById('namaDokter').innerText = nama;
-    document.getElementById('deskripsiDokter').innerText = deskripsi;
-    document.getElementById('gambarDokter').src = gambarSrc;
+    document.getElementById("namaDokter").innerText = nama;
+    document.getElementById("deskripsiDokter").innerText = deskripsi;
+    document.getElementById("gambarDokter").src = gambarSrc;
 }
 
 function handleKembali() {
-    const form = document.getElementById('formReservasi');
-    const dokterList = document.getElementById('dokterList');
-    const petunjuk = document.getElementById('petunjukReservasi');
+    const form = document.getElementById("formReservasi");
+    const dokterList = document.getElementById("dokterList");
+    const petunjuk = document.getElementById("petunjukReservasi");
 
-    if (form.style.display === 'block') {
-        form.style.display = 'none';
-        dokterList.style.display = 'grid';
-        petunjuk.style.display = 'block';
+    if (form.style.display === "block") {
+        form.style.display = "none";
+        dokterList.style.display = "grid";
+        petunjuk.style.display = "block";
+        document.getElementById("tabelReservasi").style.display = "block"; // ⬅️ Tampilkan kembali tabel
     } else {
-        window.location.href = 'main.html';
+        window.location.href = "/";
     }
 }
 
 // === Logika kirim reservasi ===
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('formReservasiForm');
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("formReservasiForm");
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); // mencegah reload
+    // Fetch dan tampilkan data reservasi ke tabel
+    fetch("/reservasi-data")
+        .then((res) => res.json())
+        .then((data) => {
+            const tabel = document.getElementById("tabelReservasi");
 
-        const namaPasien = document.getElementById('nama').value;
-        const jadwal = document.getElementById('jadwal').value;
-        const dokter = document.getElementById('namaDokter').innerText;
+            data.forEach((item, index) => {
+                const row = document.createElement("div");
+                row.className = "tabel-row";
+                row.innerHTML = `
+        <div>${index + 1}</div>
+        <div>${item.nama_pasien}</div>
+        <div>${item.dokter}</div>
+        <div>${item.jenis_periksa}</div>
+        <div>${item.jadwal}</div>
+        <div>${item.status}</div>
+    `;
+                tabel.appendChild(row);
+            });
+        })
+        .catch((err) => {
+            console.error("Gagal ambil data reservasi:", err);
+        });
 
-        // Format tanggal dari option jadwal (bisa kamu sesuaikan)
-        const tanggal = jadwal === 'senin' ? 'Senin, 08:00 - 10:00' : 'Rabu, 13:00 - 15:00';
+    // Kirim data reservasi ke server
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-        // Tempel ke dalam tabel antrean
-        const tabel = document.querySelector('.tabel-antrean');
-        const row = document.createElement('div');
-        row.className = 'tabel-row';
-        row.innerHTML = `
-            <div><input type="checkbox" /></div>
-            <div>${tanggal}</div>
-            <div>Reservasi dengan ${dokter}</div>
-            <div>Pasien: ${namaPasien}</div>
-            <div>Belum Diajukan</div>
-        `;
-        tabel.appendChild(row);
+        const jadwal = document.getElementById("jadwal").value;
+        const dokter = document.getElementById("namaDokter").innerText;
 
-        // Reset form
-        form.reset();
+        fetch("/reservasi", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content,
+            },
+            body: JSON.stringify({
+                jadwal: jadwal,
+                dokter: dokter,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Reservasi berhasil disimpan!");
+                    form.reset();
+                    location.reload();
+                } else {
+                    alert("Gagal menyimpan reservasi.");
+                }
+            })
+            .catch((err) => {
+                console.error("Error:", err);
+                alert("Terjadi kesalahan saat menyimpan.");
+            });
     });
 });

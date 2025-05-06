@@ -5,8 +5,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\NutrisiController;
 use App\Http\Controllers\KehamilanController;
+use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DokterController;
+use App\Models\User;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('main');
@@ -28,7 +32,8 @@ Route::get('/kalender-kehamilan', function () {
     return view('fitur.kalender-kehamilan');
 })->middleware('auth');
 Route::get('/reservasi-dokter', function () {
-    return view('fitur.reservasi-dokter');
+    $dokters = User::where('role', 'dokter')->get(); // ambil semua dokter
+    return view('fitur.reservasi-dokter', compact('dokters'));
 })->middleware('auth');
 
 Route::get('/api/nutrisi', [NutrisiController::class, 'getNutrisi']);
@@ -48,3 +53,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });
+
+Route::post('/reservasi', [ReservasiController::class, 'store'])->middleware('auth');
+Route::get('/reservasi-data', [ReservasiController::class, 'data'])->middleware('auth');
+
+Route::middleware(['auth', 'dokter'])->prefix('dokter')->group(function () {
+    Route::get('/', [DokterController::class, 'index'])->name('dokter.dashboard'); // Akses via /dokter
+    Route::post('/reservasi/{id}/status', [DokterController::class, 'updateStatus'])->name('dokter.updateStatus');
+});
+

@@ -233,7 +233,7 @@
 .tabel-header,
 .tabel-row {
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 4fr 2fr;
+    grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr; /* ✅ jadi 6 kolom */
     align-items: center;
     padding: 12px 16px;
 }
@@ -257,8 +257,13 @@
 
 .tabel-row div,
 .tabel-header div {
-    padding: 4px 8px;
-}
+    .tabel-header div,
+    .tabel-row div {
+        text-align: left; /* atau center kalau kamu mau rata tengah */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }}
 
 .tabel-row input[type="checkbox"] {
     width: 16px;
@@ -293,3 +298,4 @@
     color: #777;
     font-size: 14px;
 }
+

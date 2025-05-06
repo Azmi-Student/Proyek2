@@ -8,6 +8,8 @@ function tambahPengguna() {
           <select id="role" class="swal2-select">
               <option value="user">User</option>
               <option value="admin">Admin</option>
+              <option value="dokter">Dokter</option> <!-- Opsi dokter ditambahkan -->
+
           </select>
       `,
         focusConfirm: false,
@@ -64,18 +66,28 @@ function tambahPengguna() {
 function editPengguna(id, name, email, role) {
     Swal.fire({
         title: "Edit Pengguna",
-        html: `<input id="edit-name" class="swal2-input" placeholder="Nama" value="${name}">
-             <input id="edit-email" class="swal2-input" placeholder="Email" value="${email}">
-             <select id="edit-role" class="swal2-input">
-                <option value="user" ${role === "user" ? "selected" : ""}>User</option>
-                <option value="admin" ${role === "admin" ? "selected" : ""}>Admin</option>
-             </select>`,
+        html: `
+            <input id="edit-name" class="swal2-input" placeholder="Nama" value="${name}">
+            <input id="edit-email" class="swal2-input" placeholder="Email" value="${email}">
+            <input id="edit-password" type="password" class="swal2-input" placeholder="Password Baru (Kosongkan jika tidak ingin mengubah)">
+            <select id="edit-role" class="swal2-input">
+                <option value="user" ${
+                    role === "user" ? "selected" : ""
+                }>User</option>
+                <option value="admin" ${
+                    role === "admin" ? "selected" : ""
+                }>Admin</option>
+                <option value="dokter" ${
+                    role === "dokter" ? "selected" : ""
+                }>Dokter</option>
+            </select>`,
         showCancelButton: true,
         confirmButtonText: "Simpan",
         focusConfirm: false,
         preConfirm: () => {
             const nama = document.getElementById("edit-name").value;
             const email = document.getElementById("edit-email").value;
+            const password = document.getElementById("edit-password").value;
             const role = document.getElementById("edit-role").value;
 
             if (!nama || !email || !role) {
@@ -84,9 +96,12 @@ function editPengguna(id, name, email, role) {
             }
 
             const data = { name: nama, email, role };
-            console.log("Data yang dikirim:", data);
+            if (password) {
+                data.password = password; // Menambahkan password baru jika diisi
+            }
+
             return data;
-        }
+        },
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(`/admin/users/${id}`, {
@@ -99,20 +114,21 @@ function editPengguna(id, name, email, role) {
                 },
                 body: JSON.stringify(result.value),
             })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    Swal.fire("Berhasil", "Data diperbarui!", "success")
-                        .then(() => location.reload());
-                } else {
-                    throw new Error(data.message || "Update gagal.");
-                }
-            })
-            .catch((err) => {
-                Swal.fire("Gagal", err.message, "error");
-            });
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.success) {
+                        Swal.fire(
+                            "Berhasil",
+                            "Data diperbarui!",
+                            "success"
+                        ).then(() => location.reload());
+                    } else {
+                        throw new Error(data.message || "Update gagal.");
+                    }
+                })
+                .catch((err) => {
+                    Swal.fire("Gagal", err.message, "error");
+                });
         }
     });
 }
-
-

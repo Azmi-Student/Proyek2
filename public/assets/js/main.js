@@ -77,3 +77,5 @@ document.querySelectorAll(".aktivitas-gambar").forEach((img) => {
       });
     });
   });
+
+  

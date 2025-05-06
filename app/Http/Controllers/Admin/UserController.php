@@ -24,7 +24,7 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:3',
-                'role' => 'required|in:user,admin',
+                'role' => 'required|in:user,admin,dokter',
             ]);
 
             User::create([
@@ -42,31 +42,44 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        try {
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'role' => 'required|in:user,admin',
-            ]);
+{
+    try {
+        // Validasi data input
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'role' => 'required|in:user,admin,dokter',
+            'password' => 'nullable|min:6',  // Password hanya valid jika diisi
+        ]);
 
-            $user = User::findOrFail($id);
+        // Temukan pengguna berdasarkan ID
+        $user = User::findOrFail($id);
 
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'role' => $request->role,
-            ]);
+        // Data yang akan diupdate
+        $dataToUpdate = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ];
 
-
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 422);
+        // Jika password diisi, lakukan hashing dan update
+        if ($request->password) {
+            $dataToUpdate['password'] = Hash::make($request->password);  // Hash password baru
         }
+
+        // Update pengguna dengan data yang sudah disiapkan
+        $user->update($dataToUpdate);
+
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        // Tangani error dan kembalikan pesan kesalahan
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+        ], 422);
     }
+}
+
 
 
     public function destroy($id)
