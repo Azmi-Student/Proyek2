@@ -89,7 +89,7 @@
                             <p class="fitur-label">Reservasi<br>Dokter</p>
                         </a>
                         <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
+                            <img src="{{ asset('assets/images/fitur-rekap.png') }}" alt="Fitur 2" class="fitur-icon" />
                             <p class="fitur-label">Rekap Data <br> Check-up</p>
                         </a>
                         <a href="#" class="fitur-item">

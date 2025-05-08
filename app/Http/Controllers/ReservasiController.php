@@ -34,7 +34,7 @@ class ReservasiController extends Controller
 
 public function data(): JsonResponse
 {
-    // Ambil hanya data reservasi yang terkait dengan pengguna yang login
+// Ambil hanya data reservasi yang terkait dengan pengguna yang login
     $reservasi = Reservasi::where('user_id', auth()->id())->latest()->get();
 
     return response()->json($reservasi);
