@@ -1,0 +1,169 @@
+/* responsive-main.css */
+/* Responsive layout khusus untuk perangkat laptop (1024px–1440px) */
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .main-wrapper {
+    flex-direction: row;
+  }
+
+  .left-panel {
+    width: 18%;
+    padding-top: 16px;
+  }
+
+  .right-panel {
+    margin-left: 18%;
+    padding: 20px;
+  }
+
+  .search-bar {
+    max-width: 90%;
+    padding: 6px 12px;
+  }
+
+  .pink-box {
+    max-width: 90%;
+    height: 220px;
+  }
+
+  .pink-text h2 {
+    font-size: 24px;
+  }
+
+  .pink-text p {
+    font-size: 14px;
+  }
+
+  .fitur-container {
+    gap: 32px;
+    margin-top: 12px;
+  }
+
+  .fitur-icon {
+    width: 44px;
+  }
+
+  .fitur-label {
+    font-size: 12px;
+  }
+
+  .jadwal-kalender-wrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .jadwal-box,
+  .kalender-box {
+    width: 48%;
+  }
+
+  .aktivitas-kotak {
+    width: 120px;
+    height: 180px;
+  }
+
+  .aktivitas-inner {
+    width: 100px;
+    height: 150px;
+  }
+
+  .artikel-container {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .artikel-card {
+    width: calc(33% - 12px);
+  }
+
+  .footer-box {
+    padding: 8px 0;
+  }
+}
+
+/* responsive-kalenderkehamilan.css */
+/* Responsive layout khusus untuk perangkat laptop (1024px–1440px) */
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .pregnancy-box {
+    width: 60%;
+    padding: 20px;
+    min-height: 85vh;
+  }
+
+  .kalender-kehamilan-title {
+    font-size: 22px;
+  }
+
+  .btn-kembali {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+
+  .kalender-kehamilan-line {
+    margin: 12px 0 16px 0;
+  }
+
+  .kalender-kehamilan-card {
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .kalender-kehamilan-card-header h3 {
+    font-size: 16px;
+  }
+
+  .tanggal-kehamilan {
+    font-size: 12px;
+  }
+
+  .edit-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .kalender-kehamilan-card-body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .left-info h2.angka-besar {
+    font-size: 28px;
+  }
+
+  .left-info p,
+  .right-info p {
+    font-size: 13px;
+  }
+
+  .right-info h3 {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .progress-label {
+    font-size: 14px;
+  }
+
+  .progress-bar {
+    height: 20px;
+  }
+
+  .progress-icon {
+    width: 20px;
+    height: 20px;
+    top: -2px;
+  }
+
+  .progress-text {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .kalender-kehamilan-deskripsi {
+    font-size: 13px;
+  }
+}
+
+/* responsive-kalenderkehamilan.css */
+/* Responsive layout khusus untuk perangkat laptop (1024px–1440px) */
