@@ -1,66 +1,55 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://mamacare.com" target="_blank"><img src="https://your-image-link.com/mamacare-logo.svg" width="400" alt="Mamacare Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://github.com/mamacare/mamacare/actions"><img src="https://github.com/mamacare/mamacare/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/mamacare/mamacare"><img src="https://img.shields.io/packagist/dt/mamacare/mamacare" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/mamacare/mamacare"><img src="https://img.shields.io/packagist/v/mamacare/mamacare" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/mamacare/mamacare"><img src="https://img.shields.io/packagist/l/mamacare/mamacare" alt="License"></a>
 </p>
 
-## About Laravel
+## Tentang Mamacare
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Mamacare adalah platform kesehatan yang didedikasikan untuk mendukung kesehatan ibu hamil melalui layanan yang mudah diakses, edukasi, dan pemantauan kesehatan secara real-time. Kami percaya bahwa setiap ibu hamil berhak mendapatkan informasi yang akurat dan dukungan yang dapat meningkatkan kualitas kesehatan selama masa kehamilan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Beberapa fitur utama Mamacare meliputi:
+- **Konsultasi dokter online** untuk ibu hamil, memberikan akses langsung ke dokter ahli dalam bidang kehamilan dan kebidanan.
+- **Pencatatan kesehatan ibu hamil** yang mencakup deteksi dini potensi masalah kesehatan dan pengingat untuk pemeriksaan rutin.
+- **Edukasi kesehatan ibu hamil** melalui artikel, video, dan webinar yang dapat membantu ibu hamil memahami perubahan yang terjadi selama kehamilan.
+- **Aplikasi pemantauan perkembangan kehamilan** yang memberi tahu ibu tentang langkah-langkah yang perlu dilakukan pada setiap fase kehamilan.
+- **Jaringan dukungan komunitas** untuk berbagi pengalaman dan mendapatkan dukungan moral sesama ibu hamil.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Belajar Menggunakan Mamacare
 
-## Learning Laravel
+Mamacare menyediakan dokumentasi yang lengkap dan tutorial video untuk membantu Anda memulai penggunaan platform kami. Kami juga menyediakan sumber daya untuk pengembang yang tertarik mengintegrasikan fitur Mamacare dengan sistem lain.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Jika Anda baru pertama kali menggunakan Mamacare, coba kunjungi [Mamacare Bootcamp](https://bootcamp.mamacare.com) untuk panduan praktis membangun aplikasi yang sesuai dengan kebutuhan kesehatan ibu hamil.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Jika Anda lebih suka belajar lewat video, kunjungi [Mamacare Academy](https://academy.mamacare.com), tempat berbagai tutorial tentang kesehatan ibu hamil tersedia.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Sponsor Mamacare
 
-## Laravel Sponsors
+Kami ingin mengucapkan terima kasih kepada para sponsor kami yang telah mendukung pengembangan Mamacare. Jika Anda tertarik menjadi sponsor, kunjungi program [Mamacare Partners](https://partners.mamacare.com).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
+### Mitra Premium
 
 - **[Vehikl](https://vehikl.com/)**
 - **[Tighten Co.](https://tighten.co)**
 - **[WebReinvent](https://webreinvent.com/)**
 - **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
 - **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## Berkontribusi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Terima kasih telah mempertimbangkan untuk berkontribusi pada platform Mamacare! Panduan kontribusi dapat ditemukan dalam [Dokumentasi Mamacare](https://mamacare.com/docs/contributions).
 
-## Code of Conduct
+## Kode Etik
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Untuk memastikan komunitas Mamacare ramah bagi semua, mohon tinjau dan patuhi [Kode Etik](https://mamacare.com/docs/contributions#kode-etik).
 
-## Security Vulnerabilities
+## Kerentanannya Keamanan
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Jika Anda menemukan potensi kerentanannya dalam platform Mamacare, harap kirimkan email kepada kami di [security@mamacare.com](mailto:security@mamacare.com). Semua kerentanannya akan ditangani dengan segera.
 
-## License
+## Lisensi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Platform Mamacare adalah perangkat lunak sumber terbuka yang dilisensikan di bawah [Lisensi MIT](https://opensource.org/licenses/MIT).
