@@ -73,48 +73,7 @@
                 </div>
             </div>
 
-            <div class="pink-box">
-                <div class="pink-shimmer"></div>
-                <img src="{{ asset('assets/images/hero-panel.png') }}" alt="Puzzle Pattern" class="puzzle-img" />
-                <div class="pink-text">
-                    <h2>Selamat Datang, <strong>{{ Auth::user()->name }}!</strong>
-                    </h2>
-
-                    <p>Kelola data pengguna dengan mudah untuk mendukung pengelolaan kesehatan yang lebih baik.</p>
-
-                    <div class="fitur-container">
-                        <a href="#" class="fitur-item" onclick="tambahPengguna()">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Tambah Pengguna"
-                                class="fitur-icon" />
-                            <p class="fitur-label">Tambah<br>Pengguna</p>
-                        </a>
-
-                        <a href="{{ url('/reservasi-dokter') }}" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-reservasi.png') }}" alt="Kalender Kehamilan"
-                                class="fitur-icon" />
-                            <p class="fitur-label">Reservasi<br>Dokter</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Rekap Data <br> Check-up</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Fitur 4</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Fitur 5</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Fitur 6</p>
-                        </a>
-                    </div>
-                </div>
-
-                <img src="{{ asset('assets/images/ibu-hamil.png') }}" alt="Ibu Hamil" class="ibu-hamil" />
-            </div>
+            
 
             <div class="container mt-5">
                 <h2>Daftar Reservasi Dokter</h2>
