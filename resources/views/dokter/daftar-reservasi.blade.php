@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard Dokter</title>
+    <title>Daftar Reservasi</title>
     <link rel="stylesheet" href="{{ asset('assets/css/dokter/dashboard.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/animation.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/sidebar.css') }}" />
@@ -29,14 +29,16 @@
         <div class="left-panel">
             <img src="{{ asset('assets/images/logo-mamacare-pink.png') }}" alt="MamaCare Logo" class="logo" />
 
-            <div class="sidebar-item active">
-                <img src="{{ asset('assets/images/icon-home.png') }}" alt="Home Icon" class="sidebar-icon" />
-                <span class="sidebar-text">Dashboard</span>
-            </div>
-
             <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Tanya Dokter Icon" class="sidebar-icon" />
-                <span class="sidebar-text">Manajemen Reservasi</span>
+    <a href="{{ route('dokter.dashboard') }}" class="sidebar-link">
+        <img src="{{ asset('assets/images/icon-home.png') }}" alt="Home Icon" class="sidebar-icon" />
+        <span class="sidebar-text">Dashboard</span>
+    </a>
+</div>
+
+            <div class="sidebar-item active">
+                <img src="{{ asset('assets/images/icon-pesan-active.png') }}" alt="Tanya Dokter Icon" class="sidebar-icon" />
+                <span class="sidebar-text">Daftar<br>Reservasi</span>
             </div>
 
             <div class="sidebar-item">
@@ -73,10 +75,8 @@
                 </div>
             </div>
 
-            
-
             <div class="container mt-5">
-                <h2>Daftar Reservasi Dokter</h2>
+                <h2>Daftar Reservasi Pasien</h2>
 
                 @if (session('status'))
                     <div class="alert alert-success">
@@ -152,12 +152,16 @@
                 </table>
             </div>
 
+            
+
+            
+
 
 
 
         </div>
 
-        <script src="{{ asset('assets/js/dokter/dashboard.js') }}"></script>
+        <script src="{{ asset('assets/js/dokter/daftar-reservasi.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 

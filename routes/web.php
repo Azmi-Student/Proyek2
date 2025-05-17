@@ -62,6 +62,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 // Dokter Routes (with dokter middleware)
 Route::middleware(['auth', 'dokter'])->prefix('dokter')->group(function () {
     Route::get('/', [DokterController::class, 'index'])->name('dokter.dashboard');
+    Route::get('/daftar-reservasi', [DokterController::class, 'daftarReservasi'])->name('dokter.daftar-reservasi');
     Route::post('/reservasi/{id}/status', [DokterController::class, 'updateStatus'])->name('dokter.updateStatus');
     Route::post('/reservasi/{id}/hasil-checkup', [DokterController::class, 'updateHasilCheckup'])->name('dokter.updateHasilCheckup');
 

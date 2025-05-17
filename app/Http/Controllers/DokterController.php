@@ -13,12 +13,8 @@ class DokterController extends Controller
      */
     public function index()
     {
-        $namaDokter = Auth::user()->name;
+            return view('dokter.dashboard');
 
-        // Ambil reservasi yang ditujukan ke dokter ini
-        $reservasis = Reservasi::where('dokter', $namaDokter)->latest()->get();
-
-        return view('dokter.dashboard', compact('reservasis'));
     }
 
     /**
@@ -34,13 +30,13 @@ class DokterController extends Controller
 
     // Cek jika status sudah "Selesai", maka tidak bisa diubah
     if ($reservasi->status == 'Selesai') {
-        return redirect()->route('dokter.dashboard')->with('error', 'Status sudah selesai dan tidak dapat diubah.');
+        return redirect()->route('dokter.daftar-reservasi')->with('error', 'Status sudah selesai dan tidak dapat diubah.');
     }
 
     $reservasi->status = $request->status;
     $reservasi->save();
 
-    return redirect()->route('dokter.dashboard')->with('status', 'Status berhasil diperbarui');
+    return redirect()->route('dokter.daftar-reservasi')->with('status', 'Status berhasil diperbarui');
 }
 
     public function updateHasilCheckup(Request $request, $id)
@@ -54,7 +50,20 @@ class DokterController extends Controller
         $reservasi->status = 'Selesai'; // Anda bisa ubah status ke 'Selesai' setelah hasil check-up dimasukkan
         $reservasi->save();
 
-        return redirect()->route('dokter.dashboard')->with('status', 'Hasil check-up berhasil diperbarui');
+        return redirect()->route('dokter.daftar-reservasi')->with('status', 'Hasil check-up berhasil diperbarui');
     }
+
+    // Di DokterController.php
+public function daftarReservasi()
+{
+    $namaDokter = Auth::user()->name;
+
+    // Ambil data reservasi yang ditujukan untuk dokter yang sedang login
+    $reservasis = Reservasi::where('dokter', $namaDokter)->latest()->get();
+
+    // Kirim data reservasi ke tampilan daftar-reservasi
+    return view('dokter.daftar-reservasi', compact('reservasis'));
+}
+
 
 }
