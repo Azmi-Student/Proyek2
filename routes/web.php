@@ -65,5 +65,6 @@ Route::middleware(['auth', 'dokter'])->prefix('dokter')->group(function () {
     Route::get('/daftar-reservasi', [DokterController::class, 'daftarReservasi'])->name('dokter.daftar-reservasi');
     Route::post('/reservasi/{id}/status', [DokterController::class, 'updateStatus'])->name('dokter.updateStatus');
     Route::post('/reservasi/{id}/hasil-checkup', [DokterController::class, 'updateHasilCheckup'])->name('dokter.updateHasilCheckup');
+    Route::get('/reservasi/{id}/get-hasil-checkup', [DokterController::class, 'getHasilCheckup'])->name('dokter.getHasilCheckup');
 
 });

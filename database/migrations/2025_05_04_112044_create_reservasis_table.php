@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id'); // Tambahkan kolom user_id
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Relasi dengan tabel users
             $table->text('hasil_checkup')->nullable(); // Kolom untuk menyimpan hasil check up
+            $table->text('catatan')->nullable();  // Kolom catatan tambahan
+
         });
 
     }

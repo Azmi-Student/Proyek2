@@ -30,14 +30,15 @@
             <img src="{{ asset('assets/images/logo-mamacare-pink.png') }}" alt="MamaCare Logo" class="logo" />
 
             <div class="sidebar-item">
-    <a href="{{ route('dokter.dashboard') }}" class="sidebar-link">
-        <img src="{{ asset('assets/images/icon-home.png') }}" alt="Home Icon" class="sidebar-icon" />
-        <span class="sidebar-text">Dashboard</span>
-    </a>
-</div>
+                <a href="{{ route('dokter.dashboard') }}" class="sidebar-link">
+                    <img src="{{ asset('assets/images/icon-home.png') }}" alt="Home Icon" class="sidebar-icon" />
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+            </div>
 
             <div class="sidebar-item active">
-                <img src="{{ asset('assets/images/icon-pesan-active.png') }}" alt="Tanya Dokter Icon" class="sidebar-icon" />
+                <img src="{{ asset('assets/images/icon-pesan-active.png') }}" alt="Tanya Dokter Icon"
+                    class="sidebar-icon" />
                 <span class="sidebar-text">Daftar<br>Reservasi</span>
             </div>
 
@@ -126,24 +127,15 @@
                                 <td id="hasil-checkup-{{ $reservasi->id }}">
                                     <!-- Tombol input atau edit akan muncul berdasarkan status -->
                                     @if ($reservasi->status == 'Disetujui' && !$reservasi->hasil_checkup)
-                                        <form action="{{ route('dokter.updateHasilCheckup', $reservasi->id) }}"
-                                            method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('POST')
-                                            <textarea name="hasil_checkup" class="form-control" placeholder="Masukkan hasil check-up"></textarea>
-                                            <button type="submit" class="btn btn-success">Simpan Hasil</button>
-                                        </form>
+                                        <button class="btn btn-success"
+                                            onclick="showCheckupPopup({{ $reservasi->id }})">Input Hasil</button>
                                     @elseif ($reservasi->status == 'Selesai' && $reservasi->hasil_checkup)
-                                        <form action="{{ route('dokter.updateHasilCheckup', $reservasi->id) }}"
-                                            method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('POST')
-                                            <!-- Jangan beri readonly agar bisa diedit -->
-                                            <textarea name="hasil_checkup" class="form-control">{{ $reservasi->hasil_checkup }}</textarea>
-                                            <button type="submit" class="btn btn-warning">Edit Hasil</button>
-                                        </form>
+                                        <button class="btn btn-warning"
+                                            onclick="showCheckupPopup({{ $reservasi->id }})">Edit Hasil</button>
                                     @endif
                                 </td>
+
+
 
 
                             </tr>
@@ -152,9 +144,9 @@
                 </table>
             </div>
 
-            
 
-            
+
+
 
 
 
