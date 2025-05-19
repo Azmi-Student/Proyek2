@@ -488,7 +488,7 @@
                     <div class="footer-menu">
                         <div class="menu-kiri">
                             <ul>
-                                <li><a href="">Tentang kami</a></li>
+                                <li><a href="">Tentang Kami</a></li>
                                 <li><a href="">Kebijakan privasi</a></li>
                                 <li><a href="">Karier</a></li>
                                 <li><a href="">Hubungi kami</a></li>
