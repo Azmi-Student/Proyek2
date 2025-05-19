@@ -41,33 +41,52 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        // Cek apakah email terdaftar
+        $user = User::where('email', $request->email)->first();
 
-    if (Auth::attempt($credentials)) {
+        // Jika email tidak ditemukan
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'Email yang Mama masukkan tidak terdaftar nih. Yuk coba lagi!',
+            ]);
+        }
+
+        // Cek apakah password kurang dari 3 karakter
+        if (strlen($request->password) < 3) {
+            return back()->withErrors([
+                'email' => 'Password yang Mama masukkan kurang dari 3 karakter. Yuk coba lagi!',
+            ]);
+        }
+
+        // Cek apakah password sesuai dengan yang ada di database
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors([
+                'email' => 'Password yang Mama masukkan salah. Yuk coba lagi!',
+            ]);
+        }
+
+        // Jika login berhasil
+        Auth::login($user);
         $request->session()->regenerate();
 
         $role = Auth::user()->role;
 
-        // 🔁 Routing berdasarkan role
+        // Routing berdasarkan role
         if ($role === 'admin') {
             return redirect()->route('admin.dashboard');
         } elseif ($role === 'dokter') {
-            return redirect()->route('dokter.dashboard'); // ⬅️ ini harus sesuai nama route kamu
+            return redirect()->route('dokter.dashboard');
         }
 
         return redirect('/'); // untuk role 'user' (pasien)
     }
 
-    return back()->withErrors([
-        'email' => 'Email atau password salah.',
-    ]);
-}
 
 
 
