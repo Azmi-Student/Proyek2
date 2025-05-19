@@ -30,14 +30,18 @@
             <img src="{{ asset('assets/images/logo-mamacare-pink.png') }}" alt="MamaCare Logo" class="logo" />
 
             <div class="sidebar-item active">
-                <img src="{{ asset('assets/images/icon-home.png') }}" alt="Home Icon" class="sidebar-icon" />
+                <img src="{{ asset('assets/images/icon-home-active.png') }}" alt="Home Icon" class="sidebar-icon" />
                 <span class="sidebar-text">Dashboard</span>
             </div>
 
             <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Tanya Dokter Icon" class="sidebar-icon" />
-                <span class="sidebar-text">Manajemen Pengguna</span>
-            </div>
+    <a href="{{ route('dokter.daftar-reservasi') }}" class="sidebar-link">
+        <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Manajemen Reservasi Icon" class="sidebar-icon" />
+        <span class="sidebar-text">Daftar <br> Reservasi</span>
+    </a>
+</div>
+
+
 
             <div class="sidebar-item">
                 <img src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon"
@@ -116,57 +120,12 @@
                 <img src="{{ asset('assets/images/ibu-hamil.png') }}" alt="Ibu Hamil" class="ibu-hamil" />
             </div>
 
-            <div class="container mt-5">
-                <h2>Daftar Reservasi Dokter</h2>
-            
-                @if(session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-            
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Pasien</th>
-                            <th>Jenis Periksa</th>
-                            <th>Jadwal</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($reservasis as $index => $reservasi)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $reservasi->nama_pasien }}</td>
-                            <td>{{ $reservasi->jenis_periksa }}</td>
-                            <td>{{ $reservasi->jadwal }}</td>
-                            <td>{{ $reservasi->status }}</td>
-                            <td>
-                                <form action="{{ route('dokter.updateStatus', $reservasi->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('POST')
-                                    <select name="status" class="form-control" onchange="this.form.submit()">
-                                        <option value="Belum Diajukan" {{ $reservasi->status == 'Belum Diajukan' ? 'selected' : '' }}>Belum Diajukan</option>
-                                        <option value="Disetujui" {{ $reservasi->status == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
-                                        <option value="Selesai" {{ $reservasi->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
             
 
 
 
         </div>
 
-        <script src="{{ asset('assets/js/dokter/dashboard.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 

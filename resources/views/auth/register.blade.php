@@ -31,25 +31,30 @@
             </div>
 
             @if ($errors->any())
-                <div class="popup-overlay" id="popupOverlay">
-                    <div class="login-error-popup" id="loginErrorPopup">
-                        <button class="close-btn" onclick="closePopup()">&times;</button>
-                        <div class="popup-body">
-                            <div class="popup-text">
-                                <h3>Daftar akun gagal!</h3>
-                                <p>
-                                    Email atau Password yang Mama<br>
-                                    masukkan tidak valid nih.<br>
-                                    Yuk coba lagi!
-                                </p>
-                            </div>
-                            <div class="popup-img">
-                                <img src="{{ asset('assets/images/login-error.png') }}" alt="Gagal Daftar" />
-                            </div>
-                        </div>
-                    </div>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="login-error-popup" id="loginErrorPopup">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <div class="popup-body">
+                <div class="popup-text">
+                    <h3>Daftar akun gagal!</h3>
+                    <p>
+                        @if ($errors->has('email') && $errors->has('password'))
+                            Email yang Mama masukkan sudah terdaftar dan Password yang Mama masukkan terlalu pendek. Yuk coba lagi!<br>
+                        @elseif ($errors->has('email'))
+                            Email yang Mama masukkan sudah terdaftar. Yuk coba lagi!<br>
+                        @elseif ($errors->has('password'))
+                            Password yang Mama masukkan terlalu pendek. Minimal 3 karakter. Yuk coba lagi!<br>
+                        @endif
+                    </p>
                 </div>
-            @endif
+                <div class="popup-img">
+                    <img src="{{ asset('assets/images/login-error.png') }}" alt="Gagal Daftar" />
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 
             @if (session('register_success'))
                 <div class="popup-overlay" id="popupOverlay"

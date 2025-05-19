@@ -26,7 +26,7 @@
             <img src="{{ asset('assets/images/logo-mamacare-pink.png') }}" alt="MamaCare Logo" class="logo" />
 
             <div class="sidebar-item active">
-                <img src="{{ asset('assets/images/icon-home.png') }}" alt="Home Icon" class="sidebar-icon" />
+                <img src="{{ asset('assets/images/icon-home-active.png') }}" alt="Home Icon" class="sidebar-icon" />
                 <span class="sidebar-text">Home</span>
             </div>
 

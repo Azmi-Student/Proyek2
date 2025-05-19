@@ -85,6 +85,14 @@
     /* geser dikit ke kanan */
   }
 
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Hapus garis bawah */
+    color: inherit; /* Ambil warna teks dari elemen induk */
+    padding: 0; /* Hapus padding */
+    margin: 0; /* Hapus margin */
+}
   /* Styling tombol donasi */
 .donasi-btn {
   background-color: #FF3EA5; /* Warna latar belakang tombol */
