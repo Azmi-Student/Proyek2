@@ -38,13 +38,17 @@
                             <div class="popup-text">
                                 <h3>Masuk akun gagal!</h3>
                                 <p>
-                                    Email atau Password yang Mama<br>
-                                    masukkan ada yang salah nih.<br>
-                                    Yuk coba lagi!
+                                    @if ($errors->first('email') == 'Email yang Mama masukkan tidak terdaftar nih. Yuk coba lagi!')
+                                        Email yang Mama masukkan tidak terdaftar nih. Yuk coba lagi!
+                                    @elseif ($errors->first('email') == 'Password yang Mama masukkan kurang dari 3 karakter. Yuk coba lagi!')
+                                        Password yang Mama masukkan kurang dari 3 karakter. Yuk coba lagi!
+                                    @elseif ($errors->first('email') == 'Password yang Mama masukkan salah. Yuk coba lagi!')
+                                        Password yang Mama masukkan salah. Yuk coba lagi!
+                                    @else
+                                        Ada kesalahan dalam login nih. Yuk coba lagi!
+                                    @endif
                                 </p>
-
                             </div>
-
 
                             <div class="popup-img">
                                 <img src="{{ asset('assets/images/login-error.png') }}" alt="Ilustrasi gagal" />
@@ -53,6 +57,7 @@
                     </div>
                 </div>
             @endif
+
 
 
 
