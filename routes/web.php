@@ -9,6 +9,13 @@ use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DokterController;
 use App\Models\User;
+use App\Http\Controllers\DonasiController;
+
+// Token transaksi Snap
+Route::middleware('auth')->post('/donasi/token', [DonasiController::class, 'getToken']);
+
+// Webhook notifikasi dari Midtrans
+Route::post('/midtrans/callback', [DonasiController::class, 'handleCallback']);
 
 Route::get('/', function () {
     return view('main');
@@ -29,6 +36,12 @@ Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleC
 Route::middleware('auth')->group(function () {
     Route::get('/kalender-kehamilan', function () {
         return view('fitur.kalender-kehamilan');
+    });
+    Route::get('/rekap-data', function () {
+        return view('fitur.rekap-data');
+    });
+    Route::get('/tanya-dokter', function () {
+        return view('fitur.tanya-dokter');
     });
     Route::get('/reservasi-dokter', function () {
         $dokters = User::where('role', 'dokter')->get(); // Fetch doctors

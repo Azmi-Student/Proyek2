@@ -1,143 +1,143 @@
-# name: Laravel CI/CD (MySQL)
+name: Laravel CI/CD (MySQL)
 
-# on:
-#   push:
-#     branches: [ master ]
-#   pull_request:
-#     branches: [ master ]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
-# jobs:
-#   build-test:
-#     runs-on: ubuntu-latest
-#     services:
-#       mysql:
-#         image: mysql:8.0
-#         env:
-#           MYSQL_ROOT_PASSWORD: root
-#           MYSQL_DATABASE: laracicd
-#           MYSQL_USER: polindra
-#           MYSQL_PASSWORD: polindra
-#         ports:
-#           - 3306:3306
-#         options: >-
-#           --health-cmd "mysqladmin ping -p$$MYSQL_ROOT_PASSWORD"
-#           --health-interval 10s
-#           --health-timeout 5s
-#           --health-retries 5
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: laracicd
+          MYSQL_USER: polindra
+          MYSQL_PASSWORD: polindra
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -p$$MYSQL_ROOT_PASSWORD"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-#     - name: Setup PHP
-#       uses: shivammathur/setup-php@v2
-#       with:
-#         php-version: '8.3'
-#         extensions: mbstring, ctype, fileinfo, openssl, PDO, tokenizer, xml, mysql, pdo_mysql
-#         coverage: none
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, ctype, fileinfo, openssl, PDO, tokenizer, xml, mysql, pdo_mysql
+        coverage: none
 
-#     - name: Install dependencies
-#       run: |
-#         composer install --prefer-dist --no-interaction --no-progress
+    - name: Install dependencies
+      run: |
+        composer install --prefer-dist --no-interaction --no-progress
 
-#     - name: Configure MySQL
-#       run: |
-#         cp .env.example .env
-#         sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=mysql/' .env
-#         sed -i 's/DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
-#         sed -i 's/DB_PORT=3306/DB_PORT=3306/' .env
-#         sed -i 's/DB_DATABASE=laravel/DB_DATABASE=laracicd/' .env
-#         sed -i 's/DB_USERNAME=root/DB_USERNAME=polindra/' .env
-#         sed -i 's/DB_PASSWORD=/DB_PASSWORD=polindra/' .env
+    - name: Configure MySQL
+      run: |
+        cp .env.example .env
+        sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=mysql/' .env
+        sed -i 's/DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
+        sed -i 's/DB_PORT=3306/DB_PORT=3306/' .env
+        sed -i 's/DB_DATABASE=laravel/DB_DATABASE=laracicd/' .env
+        sed -i 's/DB_USERNAME=root/DB_USERNAME=polindra/' .env
+        sed -i 's/DB_PASSWORD=/DB_PASSWORD=polindra/' .env
 
-#     - name: Generate app key
-#       run: php artisan key:generate
+    - name: Generate app key
+      run: php artisan key:generate
 
-#     - name: Wait for MySQL to be ready
-#       run: |
-#         for i in {1..10}; do
-#           if mysqladmin ping -h127.0.0.1 -upolindra -ppolindra --silent; then
-#             echo "MySQL is ready!"
-#             break
-#           fi
-#           echo "Waiting for MySQL... Attempt $i/10"
-#           sleep 3
-#         done
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {1..10}; do
+          if mysqladmin ping -h127.0.0.1 -upolindra -ppolindra --silent; then
+            echo "MySQL is ready!"
+            break
+          fi
+          echo "Waiting for MySQL... Attempt $i/10"
+          sleep 3
+        done
 
-#     - name: Run database migrations and seed
-#       run: php artisan migrate:fresh --seed
+    - name: Run database migrations and seed
+      run: php artisan migrate:fresh --seed
 
-#     # - name: Execute tests
-#     #   run: php artisan test
+    # - name: Execute tests
+    #   run: php artisan test
 
-#     - name: Upload artifact for deployment
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: RPL2C-Kelompok2-Mamacare
-#         path: |
-#           .
-#           !.github/
-#           !.git/
-#           !node_modules/
-#           !vendor/
-#           !storage/debugbar/
-#         retention-days: 1
+    - name: Upload artifact for deployment
+      uses: actions/upload-artifact@v4
+      with:
+        name: laravel-d4rpl2c-kelompok-2
+        path: |
+          .
+          !.github/
+          !.git/
+          !node_modules/
+          !vendor/
+          !storage/debugbar/
+        retention-days: 1
 
-#   deploy:
-#     needs: build-test
-#     runs-on: ubuntu-latest
-#     if: github.ref == 'refs/heads/master'
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
-#     steps:
-#     - name: Download artifact
-#       uses: actions/download-artifact@v4
-#       with:
-#         name: RPL2C-Kelompok2-Mamacare
-#         path: ./deploy
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: laravel-d4rpl2c-kelompok-2
+        path: ./deploy
 
-#     - name: Install SSH key
-#       uses: shimataro/ssh-key-action@v2
-#       with:
-#         key: ${{ secrets.SSH_PRIVATE_KEY }}
-#         known_hosts: ${{ secrets.KNOWN_HOSTS }}
-#         port: 64000
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        port: 64000
 
-#     - name: Deploy to server via SCP/SSH
-#       run: |
-#         # Buat direktori sementara di server
-#         ssh -o StrictHostKeyChecking=no -p 64000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ~/RPL2C-Kelompok2-Mamacare"
+    - name: Deploy to server via SCP/SSH
+      run: |
+        # Buat direktori sementara di server
+        ssh -o StrictHostKeyChecking=no -p 64000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ~/laravel-d4rpl2c-kelompok-2"
 
-#         # Upload files ke server
-#         scp -o StrictHostKeyChecking=no -P 64000 -r ./deploy/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/RPL2C-Kelompok2-Mamacare/
+        # Upload files ke server
+        scp -o StrictHostKeyChecking=no -P 64000 -r ./deploy/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/laravel-d4rpl2c-kelompok-2/
 
-#         # Jalankan deployment script di server
-#         ssh -o StrictHostKeyChecking=no -p 64000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-#           cd ~/RPL2C-Kelompok2-Mamacare
+        # Jalankan deployment script di server
+        ssh -o StrictHostKeyChecking=no -p 64000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          cd ~/laravel-d4rpl2c-kelompok-2
 
-#           # Backup existing deployment (optional)
-#           # tar -czf /backup/laravel-backup-$(date +"%Y%m%d%H%M%S").tar.gz /var/www/RPL2C-Kelompok2-Mamacare
+          # Backup existing deployment (optional)
+          # tar -czf /backup/laravel-backup-$(date +"%Y%m%d%H%M%S").tar.gz /var/www/laravel-d4rpl2c-kelompok-2
 
-#           # Copy files to production directory
-#           sudo rsync -avz --delete \
-#             --exclude='.env' \
-#             --exclude='storage' \
-#             --exclude='.git' \
-#             --exclude='.github' \
-#             ~/RPL2C-Kelompok2-Mamacare/ /var/www/RPL2C-Kelompok2-Mamacare/
+          # Copy files to production directory
+          sudo rsync -avz --delete \
+            --exclude='.env' \
+            --exclude='storage' \
+            --exclude='.git' \
+            --exclude='.github' \
+            ~/laravel-d4rpl2c-kelompok-2/ /var/www/laravel-d4rpl2c-kelompok-2/
 
-#           # Set permissions
-#           sudo chown -R www-data:www-data /var/www/RPL2C-Kelompok2-Mamacare
-#           sudo chmod -R 755 /var/www/RPL2C-Kelompok2-Mamacare/storage
-#           sudo chmod -R 755 /var/www/RPL2C-Kelompok2-Mamacare/bootstrap/cache
+          # Set permissions
+          sudo chown -R www-data:www-data /var/www/laravel-d4rpl2c-kelompok-2
+          sudo chmod -R 755 /var/www/laravel-d4rpl2c-kelompok-2/storage
+          sudo chmod -R 755 /var/www/laravel-d4rpl2c-kelompok-2/bootstrap/cache
 
-#           # Run deployment commands
-#           cd /var/www/RPL2C-Kelompok2-Mamacare
-#           sudo -u www-data composer install --optimize-autoloader --no-dev
-#           sudo -u www-data php artisan config:cache
-#           sudo -u www-data php artisan route:cache
-#           sudo -u www-data php artisan view:cache
-#           sudo -u www-data php artisan migrate --force
+          # Run deployment commands
+          cd /var/www/laravel-d4rpl2c-kelompok-2
+          sudo -u www-data composer install --optimize-autoloader --no-dev
+          sudo -u www-data php artisan config:cache
+          sudo -u www-data php artisan route:cache
+          sudo -u www-data php artisan view:cache
+          sudo -u www-data php artisan migrate --force
 
-#           # Cleanup
-#           rm -rf ~/RPL2C-Kelompok2-Mamacare
-#         EOF
+          # Cleanup
+          rm -rf ~/laravel-d4rpl2c-kelompok-2
+        EOF

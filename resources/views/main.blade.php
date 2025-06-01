@@ -30,10 +30,14 @@
                 <span class="sidebar-text">Home</span>
             </div>
 
-            <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Tanya Dokter Icon" class="sidebar-icon" />
-                <span class="sidebar-text">Tanya Dokter</span>
-            </div>
+            <a href="{{ url('/tanya-dokter') }}" class="sidebar-link">
+                <div class="sidebar-item">
+                    <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Tanya Dokter Icon"
+                        class="sidebar-icon" />
+                    <span class="sidebar-text">Tanya Dokter</span>
+                </div>
+            </a>
+
 
             <div class="sidebar-item">
                 <img src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon"
@@ -94,7 +98,7 @@
                                 class="fitur-icon" />
                             <p class="fitur-label">Reservasi<br>Dokter</p>
                         </a>
-                        <a href="#" class="fitur-item">
+                        <a href="{{ url('/rekap-data') }}" class="fitur-item">
                             <img src="{{ asset('assets/images/fitur-rekap.png') }}" alt="Fitur 2"
                                 class="fitur-icon" />
                             <p class="fitur-label">Rekap Data <br> Check-up</p>
@@ -262,6 +266,9 @@
     </div>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 

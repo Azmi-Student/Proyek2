@@ -78,4 +78,96 @@ document.querySelectorAll(".aktivitas-gambar").forEach((img) => {
     });
   });
 
-  
+  document.addEventListener("DOMContentLoaded", function () {
+    const donasiBtn = document.querySelector(".donasi-btn");
+
+    if (donasiBtn) {
+        donasiBtn.addEventListener("click", function () {
+            Swal.fire({
+                title: "Pilih Nominal Donasi",
+                input: "select",
+                inputOptions: {
+                    1000: "Rp 1.000",
+                    5000: "Rp 5.000",
+                    10000: "Rp 10.000",
+                },
+                inputPlaceholder: "Pilih nominal",
+                showCancelButton: true,
+                confirmButtonText: "Lanjut Pembayaran",
+                cancelButtonText: "Batal",
+                preConfirm: (value) => {
+                    if (!value) {
+                        Swal.showValidationMessage("Silakan pilih nominal");
+                    }
+                    return value;
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    initiatePayment(result.value);
+                }
+            });
+        });
+    }
+
+    function initiatePayment(amount) {
+        fetch("/donasi/token", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+            body: JSON.stringify({ amount: amount }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.token) {
+                    snap.pay(data.token, {
+                        onSuccess: function (result) {
+                            Swal.fire(
+                                "Transaksi Berhasil",
+                                "Pembayaran Anda telah berhasil!",
+                                "success"
+                            );
+                            console.log("Success:", result);
+                        },
+                        onPending: function (result) {
+                            Swal.fire(
+                                "Menunggu Pembayaran",
+                                "Silakan selesaikan pembayaran Anda.",
+                                "info"
+                            );
+                            console.log("Pending:", result);
+                        },
+                        onError: function (result) {
+                            Swal.fire(
+                                "Transaksi Gagal",
+                                "Terjadi kesalahan saat memproses transaksi.",
+                                "error"
+                            );
+                            console.log("Error:", result);
+                        },
+                        onClose: function () {
+                            Swal.fire(
+                                "Dibatalkan",
+                                "Kamu menutup pop-up sebelum menyelesaikan transaksi.",
+                                "warning"
+                            );
+                            console.log("Popup closed");
+                        },
+                    });
+                } else {
+                    Swal.fire("Gagal", "Token tidak tersedia.", "error");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                Swal.fire(
+                    "Gagal",
+                    "Terjadi kesalahan saat memproses permintaan.",
+                    "error"
+                );
+            });
+    }
+});

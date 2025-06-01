@@ -1,0 +1,162 @@
+.rekap-data-box {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    width: 50%;
+    min-height: 90vh;
+    /* ✅ lebih pendek dari layar, gak bikin scroll */
+    box-sizing: border-box;
+}
+
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.rekap-data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rekap-data-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #FF3EA5;
+    margin: 0;
+}
+
+.btn-kembali {
+    background-color: #FF3EA5;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-kembali:hover {
+    background-color: #e73397;
+    /* lebih gelap dikit waktu hover */
+}
+
+.rekap-data-line {
+    width: 100px;
+    height: 8px;
+    background-color: #FF3EA5;
+    border-radius: 20px;
+    margin: 16px 0 20px 0;
+}
+.rekap-data-box {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    width: 50%;
+    min-height: 90vh;
+    box-sizing: border-box;
+}
+
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.rekap-data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rekap-data-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #FF3EA5;
+    margin: 0;
+}
+
+.btn-kembali {
+    background-color: #FF3EA5;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-kembali:hover {
+    background-color: #e73397;
+}
+
+.rekap-data-line {
+    width: 100px;
+    height: 8px;
+    background-color: #FF3EA5;
+    border-radius: 20px;
+    margin: 16px 0 20px 0;
+}
+
+.filter-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.jenis-check-up,
+.search-check-up {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.rekap-data-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.rekap-item {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rekap-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rekap-item-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #FF3EA5;
+    margin: 0;
+}
+
+.rekap-item-date {
+    font-size: 14px;
+    color: #888;
+}
+
+.rekap-item-info {
+    font-size: 14px;
+    color: #555;
+}
+
+.rekap-item-doctor {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+}
