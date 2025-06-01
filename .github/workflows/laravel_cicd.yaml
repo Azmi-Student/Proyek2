@@ -100,18 +100,18 @@ jobs:
       with:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
-        port: 64000
+        port: 22
 
     - name: Deploy to server via SCP/SSH
       run: |
         # Buat direktori sementara di server
-        ssh -o StrictHostKeyChecking=no -p 64000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ~/laravel-d4rpl2c-kelompok-2"
+        ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ~/laravel-d4rpl2c-kelompok-2"
 
         # Upload files ke server
-        scp -o StrictHostKeyChecking=no -P 64000 -r ./deploy/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/laravel-d4rpl2c-kelompok-2/
+        scp -o StrictHostKeyChecking=no -P 22 -r ./deploy/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/laravel-d4rpl2c-kelompok-2/
 
         # Jalankan deployment script di server
-        ssh -o StrictHostKeyChecking=no -p 64000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           cd ~/laravel-d4rpl2c-kelompok-2
 
           # Backup existing deployment (optional)
