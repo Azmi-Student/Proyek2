@@ -45,7 +45,6 @@
         </div>
 
         <div class="right-panel">
-            <div class="center-wrapper">
                 <div class="pregnancy-box">
                     <div class="kalender-kehamilan-header">
                         <h2 class="kalender-kehamilan-title">Hasil Check-Up</h2>
@@ -59,7 +58,6 @@
                 </div>
 
 
-            </div>
         </div>
 
     </div>

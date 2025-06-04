@@ -4,68 +4,11 @@
     padding: 24px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 24px;
-    width: 50%;
-    min-height: 90vh;
-    /* ✅ lebih pendek dari layar, gak bikin scroll */
-    box-sizing: border-box;
-}
-
-.center-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.rekap-data-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.rekap-data-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #FF3EA5;
-    margin: 0;
-}
-
-.btn-kembali {
-    background-color: #FF3EA5;
-    color: #fff;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
-}
-
-.btn-kembali:hover {
-    background-color: #e73397;
-    /* lebih gelap dikit waktu hover */
-}
-
-.rekap-data-line {
-    width: 100px;
-    height: 8px;
-    background-color: #FF3EA5;
-    border-radius: 20px;
-    margin: 16px 0 20px 0;
-}
-.rekap-data-box {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 24px;
-    width: 50%;
+    width: 100%;  /* Memperlebar ke 100% lebar layar */
     min-height: 90vh;
     box-sizing: border-box;
-}
-
-.center-wrapper {
-    display: flex;
-    justify-content: center;
+    margin-left: 0;  /* Tidak ada margin kiri */
+    margin-right: 0; /* Tidak ada margin kanan */
 }
 
 .rekap-data-header {
@@ -130,12 +73,19 @@
     padding: 20px;
     margin-bottom: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .rekap-item-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .rekap-item-title {
@@ -150,7 +100,9 @@
     color: #888;
 }
 
-.rekap-item-info {
+.rekap-item-info,
+.rekap-item-catatan {
+    margin: 5px 0;
     font-size: 14px;
     color: #555;
 }
@@ -159,4 +111,168 @@
     font-size: 14px;
     color: #888;
     margin-top: 10px;
+}
+
+.rekap-item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.rekap-item-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.rekap-item-table td:first-child {
+    font-weight: bold;
+    width: 200px;
+}
+
+.rekap-item-details {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: none;
+}
+
+.rekap-item-images img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.rekap-item-images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-container {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.image-description {
+    font-size: 12px;
+    color: #555;
+    margin-top: 8px;
+    max-width: 100px; /* Membatasi lebar keterangan agar tidak terlalu panjang */
+}
+
+.rekap-item-images img {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s ease; /* Efek zoom saat hover */
+}
+
+.rekap-item-images img:hover {
+    transform: scale(1.1);  /* Zoom sedikit saat hover */
+}
+
+.btn-detail {
+    background-color: #FF3EA5;  /* Warna tombol */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-detail:hover {
+    background-color: #e73397;  /* Lebih gelap saat hover */
+}
+
+.rekap-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-print-pdf {
+    background-color: #FF3EA5;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-print-pdf:hover {
+    background-color: #e73397;
+}
+.swal2-popup {
+    font-family: 'Poppins', sans-serif;
+    max-width: 600px;
+    text-align: center;
+}
+
+.swal2-title {
+    font-size: 24px;
+    color: #FF3EA5;
+    font-weight: 600;
+}
+
+.swal2-html-container {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.swal2-confirm, .swal2-cancel {
+    background-color: #FF3EA5;
+    color: white;
+    font-size: 16px;
+    padding: 10px 30px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.swal2-confirm:hover, .swal2-cancel:hover {
+    background-color: #e73397;
+}
+.rekap-item-printable {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.rekap-item-printable table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.rekap-item-printable table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.rekap-item-printable img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }

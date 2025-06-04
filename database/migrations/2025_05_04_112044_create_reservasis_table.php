@@ -22,6 +22,12 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Relasi dengan tabel users
             $table->text('hasil_checkup')->nullable(); // Kolom untuk menyimpan hasil check up
             $table->text('catatan')->nullable();  // Kolom catatan tambahan
+            $table->integer('usia')->nullable(); // Kolom Usia
+            $table->float('berat_badan')->nullable(); // Kolom Berat Badan
+            $table->float('detak_jantung_janin')->nullable(); // Kolom Detak Jantung Janin
+            $table->string('kondisi_cairan_ketuban')->nullable(); // Kolom Kondisi Cairan Ketuban
+            $table->text('keluhan')->nullable(); // Kolom Keluhan
+            $table->text('gambar_checkup')->nullable(); // Kolom untuk menyimpan nama gambar
 
         });
 

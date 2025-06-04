@@ -40,25 +40,40 @@ class DokterController extends Controller
     }
 
     public function updateHasilCheckup(Request $request, $id)
-    {
-        $request->validate([
-            'hasil_checkup' => 'required|string',
-            'catatan' => 'nullable|string',
-        ]);
+{
+    $request->validate([
+        'hasil_checkup' => 'required|string',
+        'catatan' => 'nullable|string',
+        'gambar_checkup' => 'nullable|array|max:3',
+        'gambar_checkup.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        // Temukan reservasi berdasarkan ID
-        $reservasi = Reservasi::findOrFail($id);
+    $reservasi = Reservasi::findOrFail($id);
 
-        // Simpan hasil check-up dan catatan
-        $reservasi->hasil_checkup = $request->hasil_checkup;
-        $reservasi->status = 'Selesai';  // Set status jadi selesai setelah check-up
-        if ($request->catatan) {
-            $reservasi->catatan = $request->catatan;
+    // Simpan gambar yang diunggah
+    if ($request->hasFile('gambar_checkup')) {
+        $images = [];
+        foreach ($request->file('gambar_checkup') as $image) {
+            $images[] = $image->store('images', 'public');
         }
-        $reservasi->save();
-
-        return response()->json(['success' => true]);
+        $reservasi->gambar_checkup = json_encode($images);
     }
+
+    $reservasi->hasil_checkup = $request->hasil_checkup;
+    $reservasi->catatan = $request->catatan;
+    $reservasi->usia = $request->usia;
+    $reservasi->berat_badan = $request->berat_badan;
+    $reservasi->detak_jantung_janin = $request->detak_jantung_janin;
+    $reservasi->kondisi_cairan_ketuban = $request->kondisi_cairan_ketuban;
+    $reservasi->keluhan = $request->keluhan;
+    $reservasi->status = 'Selesai';
+    
+    $reservasi->save();
+
+    return response()->json(['success' => true]);
+}
+
+
 
 
     // Di DokterController.php
@@ -75,26 +90,36 @@ class DokterController extends Controller
 
     public function getHasilCheckup($id)
 {
-    // Temukan reservasi berdasarkan ID
     $reservasi = Reservasi::findOrFail($id);
 
-    // Jika hasil check-up ada, kembalikan data hasil check-up
+    // Jika hasil check-up ada, kembalikan data hasil check-up beserta data tambahan
     if ($reservasi->hasil_checkup) {
         return response()->json([
             'success' => true,
             'hasil_checkup' => $reservasi->hasil_checkup,
-            'catatan' => $reservasi->catatan
+            'catatan' => $reservasi->catatan,
+            'usia' => $reservasi->usia,
+            'berat_badan' => $reservasi->berat_badan,
+            'detak_jantung_janin' => $reservasi->detak_jantung_janin,
+            'kondisi_cairan_ketuban' => $reservasi->kondisi_cairan_ketuban,
+            'keluhan' => $reservasi->keluhan
         ]);
     }
 
-    // Jika hasil check-up belum ada, kembalikan form kosong
     return response()->json([
         'success' => false,
         'hasil_checkup' => '',
-        'catatan' => ''
+        'catatan' => '',
+        'usia' => '',
+        'berat_badan' => '',
+        'detak_jantung_janin' => '',
+        'kondisi_cairan_ketuban' => '',
+        'keluhan' => ''
     ]);
 }
 
+
+    
 
 
 }

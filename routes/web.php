@@ -37,9 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/kalender-kehamilan', function () {
         return view('fitur.kalender-kehamilan');
     });
-    Route::get('/rekap-data', function () {
-        return view('fitur.rekap-data');
-    });
+    Route::middleware('auth')->get('/rekap-data', [ReservasiController::class, 'rekapDataCheckup']);
+
     Route::get('/tanya-dokter', function () {
         return view('fitur.tanya-dokter');
     });

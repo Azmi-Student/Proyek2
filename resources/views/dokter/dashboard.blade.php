@@ -35,11 +35,12 @@
             </div>
 
             <div class="sidebar-item">
-    <a href="{{ route('dokter.daftar-reservasi') }}" class="sidebar-link">
-        <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Manajemen Reservasi Icon" class="sidebar-icon" />
-        <span class="sidebar-text">Daftar <br> Reservasi</span>
-    </a>
-</div>
+                <a href="{{ route('dokter.daftar-reservasi') }}" class="sidebar-link">
+                    <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Manajemen Reservasi Icon"
+                        class="sidebar-icon" />
+                    <span class="sidebar-text">Daftar <br> Reservasi</span>
+                </a>
+            </div>
 
 
 
@@ -120,7 +121,7 @@
                 <img src="{{ asset('assets/images/ibu-hamil.png') }}" alt="Ibu Hamil" class="ibu-hamil" />
             </div>
 
-            
+
 
 
 
