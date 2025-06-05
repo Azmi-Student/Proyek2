@@ -34,16 +34,7 @@
                 <span class="sidebar-text">Dashboard</span>
             </div>
 
-            <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pesan.png') }}" alt="Tanya Dokter Icon" class="sidebar-icon" />
-                <span class="sidebar-text">Manajemen Pengguna</span>
-            </div>
 
-            <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon"
-                    class="sidebar-icon" />
-                <span class="sidebar-text">Pengaturan</span>
-            </div>
         </div>
 
         <div class="right-panel">
@@ -55,22 +46,24 @@
                 <div class="search-right">
                     <img src="{{ asset('assets/images/icon-bookmark.png') }}" class="icon" />
                     <img src="{{ asset('assets/images/icon-bell.png') }}" class="icon" />
+
+                    <!-- Avatar -->
+                    <div class="profile-container">
+                        <img src="{{ Auth::check() && Auth::user()->avatar ? Auth::user()->avatar : asset('assets/images/profile-pic.png') }}"
+                            alt="Profile" class="profile-pic" onclick="toggleDropdown()" style="cursor: pointer;" />
+
+                        <!-- Dropdown Menu -->
+                        <div id="dropdown-menu" class="dropdown-menu">
+                            <a href="#"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        </div>
+                    </div>
+
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-
-                    @if (Auth::check() && Auth::user()->avatar)
-                        <img src="{{ Auth::user()->avatar }}" alt="Profile" class="profile-pic"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                            style="cursor: pointer;" />
-                    @else
-                        <img src="{{ asset('assets/images/profile-pic.png') }}" alt="Profile" class="profile-pic"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                            style="cursor: pointer;" />
-                    @endif
-
-
                 </div>
+
             </div>
 
             <div class="pink-box">
@@ -89,27 +82,7 @@
                             <p class="fitur-label">Tambah<br>Pengguna</p>
                         </a>
 
-                        <a href="{{ url('/reservasi-dokter') }}" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-reservasi.png') }}" alt="Kalender Kehamilan"
-                                class="fitur-icon" />
-                            <p class="fitur-label">Reservasi<br>Dokter</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Rekap Data <br> Check-up</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Fitur 4</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Fitur 5</p>
-                        </a>
-                        <a href="#" class="fitur-item">
-                            <img src="{{ asset('assets/images/fitur-1.png') }}" alt="Fitur 2" class="fitur-icon" />
-                            <p class="fitur-label">Fitur 6</p>
-                        </a>
+
                     </div>
                 </div>
 
@@ -160,6 +133,22 @@
 
 
         </div>
+        <script>
+            function toggleDropdown() {
+                const dropdown = document.getElementById('dropdown-menu');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Menyembunyikan dropdown jika klik di luar area dropdown
+            window.onclick = function(event) {
+                if (!event.target.matches('.profile-pic')) {
+                    const dropdown = document.getElementById('dropdown-menu');
+                    if (dropdown.style.display === 'block') {
+                        dropdown.style.display = 'none';
+                    }
+                }
+            }
+        </script>
 
         <script src="{{ asset('assets/js/admin/dashboard.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

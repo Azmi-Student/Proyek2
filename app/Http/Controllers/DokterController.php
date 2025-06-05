@@ -118,7 +118,33 @@ class DokterController extends Controller
     ]);
 }
 
+public function update(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . auth()->id(), // Pastikan email unik kecuali milik dokter ini
+                'password' => 'nullable|min:6',
+            ]);
 
+            $user = auth()->user();
+
+            $dataToUpdate = [
+                'name' => $request->name,
+                'email' => $request->email,
+            ];
+
+            if ($request->password) {
+                $dataToUpdate['password'] = Hash::make($request->password);
+            }
+
+            $user->update($dataToUpdate);
+
+            return redirect()->route('dokter.pengaturan')->with('success', 'Profil berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return redirect()->route('dokter.pengaturan')->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
     
 
 

@@ -43,9 +43,12 @@
             </div>
 
             <div class="sidebar-item">
-                <img src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon"
-                    class="sidebar-icon" />
-                <span class="sidebar-text">Pengaturan</span>
+                <a href="{{ route('dokter.pengaturan') }}" class="sidebar-link"><img
+                        src="{{ asset('assets/images/icon-pengaturan.png') }}" alt="Pengaturan Icon"
+                        class="sidebar-icon" />
+                    <span class="sidebar-text">Pengaturan</span> </a>
+
+
             </div>
         </div>
 

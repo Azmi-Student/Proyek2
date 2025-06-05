@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DokterController;
 use App\Models\User;
 use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\ChatController;
+
+Route::post('/chat/store/{dokterId}', [ChatController::class, 'store']);
 
 // Token transaksi Snap
 Route::middleware('auth')->post('/donasi/token', [DonasiController::class, 'getToken']);
@@ -27,6 +30,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware('auth')->put('/profile', [UserController::class, 'update'])->name('profile.update');
 
 // Social Authentication Routes
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
@@ -37,11 +41,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/kalender-kehamilan', function () {
         return view('fitur.kalender-kehamilan');
     });
+    Route::middleware('auth')->get('/pengaturan', function () {
+    return view('fitur.pengaturan');
+})->name('fitur.pengaturan');
+
     Route::middleware('auth')->get('/rekap-data', [ReservasiController::class, 'rekapDataCheckup']);
 
     Route::get('/tanya-dokter', function () {
-        return view('fitur.tanya-dokter');
+        // Mengambil data dokter yang terdaftar dengan role 'dokter'
+        $dokters = User::where('role', 'dokter')->get();  // Query untuk mengambil data dokter
+
+        // Mengirimkan data dokter ke view tanya-dokter
+        return view('fitur.tanya-dokter', compact('dokters'));
     });
+
     Route::get('/reservasi-dokter', function () {
         $dokters = User::where('role', 'dokter')->get(); // Fetch doctors
         return view('fitur.reservasi-dokter', compact('dokters'));
@@ -78,5 +91,12 @@ Route::middleware(['auth', 'dokter'])->prefix('dokter')->group(function () {
     Route::post('/reservasi/{id}/status', [DokterController::class, 'updateStatus'])->name('dokter.updateStatus');
     Route::post('/reservasi/{id}/hasil-checkup', [DokterController::class, 'updateHasilCheckup'])->name('dokter.updateHasilCheckup');
     Route::get('/reservasi/{id}/get-hasil-checkup', [DokterController::class, 'getHasilCheckup'])->name('dokter.getHasilCheckup');
+    Route::get('/reservasi/{id}/get-hasil-checkup', [DokterController::class, 'getHasilCheckup'])->name('dokter.getHasilCheckup');
+    // Tambahkan rute pengaturan akun untuk dokter
+    Route::get('/pengaturan', function () {
+        return view('dokter.pengaturan');  // Pastikan ada view 'dokter.pengaturan' untuk halaman pengaturan
+    })->name('dokter.pengaturan');
 
+    // Update profile untuk dokter
+    Route::put('/profile', [DokterController::class, 'update'])->name('dokter.profile.update');
 });

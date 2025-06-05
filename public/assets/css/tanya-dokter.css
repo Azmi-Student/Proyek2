@@ -1,4 +1,4 @@
-.pregnancy-box {
+.tanya-dokter-box {
     background-color: #ffffff;
     border-radius: 16px;
     padding: 24px;
@@ -8,25 +8,25 @@
     min-height: 90vh;
     /* ✅ lebih pendek dari layar, gak bikin scroll */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
-
-
-.kalender-kehamilan-header {
+.tanya-dokter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.kalender-kehamilan-title {
+.tanya-dokter-title {
     font-size: 24px;
     font-weight: 600;
-    color: #FF3EA5;
+    color: #ff3ea5;
     margin: 0;
 }
 
 .btn-kembali {
-    background-color: #FF3EA5;
+    background-color: #ff3ea5;
     color: #fff;
     border: none;
     padding: 8px 20px;
@@ -42,136 +42,131 @@
     /* lebih gelap dikit waktu hover */
 }
 
-.kalender-kehamilan-line {
+.tanya-dokter-line {
     width: 100px;
     height: 8px;
-    background-color: #FF3EA5;
+    background-color: #ff3ea5;
     border-radius: 20px;
     margin: 16px 0 20px 0;
 }
 
-.kalender-kehamilan-card {
-    background-color: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+.doctor-list {
+    display: flex;
+    flex-direction: column;
     margin-top: 20px;
-  }
+}
 
-  .kalender-kehamilan-card-header {
+.doctor-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-  }
-
-  .kalender-kehamilan-card-header h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #FF3EA5;
-  }
-
-  .tanggal-kehamilan {
-    margin: 4px 0 0 0;
-    font-size: 13px;
-    color: #888;
-  }
-
-  .edit-icon {
-    width: 20px;
-    height: 20px;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
     cursor: pointer;
-  }
+}
 
-  .divider-line {
-    border: none;
-    border-top: 1px solid #F3D4E3;
-    margin: 16px 0;
-  }
+.doctor-item:hover {
+    background-color: #f8f8f8;
+}
 
-  .kalender-kehamilan-card-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.doctor-item.active {
+    background-color: #ff3ea5;
+    color: white;
+}
 
-  .left-info h2.angka-besar {
-    color: #FF3EA5;
-    margin: 0;
-  }
+.doctor-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
 
-  .left-info p,
-  .right-info p {
-    margin: 4px 0 0 0;
-    font-size: 14px;
-    color: #777;
-  }
+.doctor-info {
+    flex: 1;
+}
 
-  .right-info h3 {
-    margin: 0;
-    color: #FF3EA5;
-    text-align: right;
-  }
-
-  .progress-label {
-    margin-top: 12px;
+.doctor-name {
+    font-size: 16px;
     font-weight: 600;
-    color: #FF3EA5;
-  }
+    color: #ff3ea5;
+    margin: 0;
+}
 
-  .progress-wrapper {
-    margin-bottom: 16px;
-  }
+.doctor-description {
+    font-size: 12px;
+    color: #7d7d7d;
+    margin: 5px 0;
+}
 
-  .progress-bar {
-    position: relative;
-    height: 24px;
-    background-color: #fff;
-    border: 2px solid #FF3EA5;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 6px;
-  }
-
-  .progress-fill {
-    background-color: #FFE5F0;
-    height: 100%;
-    border-radius: 20px;
-    width: 0%;
-    transition: width 0.3s ease;
-  }
-
-  .progress-icon {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: -2px;
-    left: 0;
-    transition: left 0.3s ease;
-    pointer-events: none;
-  }
-
-  .progress-slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 24px;
-    opacity: 0; /* slider tak terlihat */
-    cursor: pointer;
-  }
-
-
-  .progress-text {
-    font-size: 13px;
-    color: #FF3EA5;
-    margin-top: 6px;
-    text-align: right;
-  }
-
-  .kalender-kehamilan-deskripsi {
-    margin-top: 16px;
+.doctor-time {
     font-size: 14px;
-    line-height: 1.6;
-    color: #666;
-  }
+    color: #ff3ea5;
+    margin-right: 10px;
+}
 
+.chat-panel {
+    display: none; /* Awalnya disembunyikan */
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    background-color: #ffffff;
+    border-left: 2px solid #ff3ea5;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 16px;
+    z-index: 9999;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#doctor-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ff3ea5;
+}
+
+.close-chat-btn {
+    background-color: #ff3ea5;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.chat-body {
+    flex: 1;
+    margin: 16px 0;
+    overflow-y: auto;
+    max-height: 80%;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+#chat-message {
+    width: 80%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+#send-message {
+    background-color: #ff3ea5;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}

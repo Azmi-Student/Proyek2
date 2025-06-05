@@ -1,0 +1,137 @@
+.pengaturan-box {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    width: 100%;  /* Memperlebar ke 100% lebar layar */
+    min-height: 90vh;
+    box-sizing: border-box;
+    margin-left: 0;  /* Tidak ada margin kiri */
+    margin-right: 0; /* Tidak ada margin kanan */
+}
+
+.pengaturan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pengaturan-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #FF3EA5;
+    margin: 0;
+}
+
+.btn-kembali {
+    background-color: #FF3EA5;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-kembali:hover {
+    background-color: #e73397;
+}
+
+.pengaturan-line {
+    width: 100px;
+    height: 8px;
+    background-color: #FF3EA5;
+    border-radius: 20px;
+    margin: 16px 0 20px 0;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+}
+
+.profile-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.profile-section.active {
+    color: #FF3EA5;  /* Color for active state */
+    font-weight: 600;  /* Optionally make the text bold */
+}
+
+.profile-section.active .profile-icon {
+    filter: brightness(1.2); /* Slightly brightens the icon for active state */
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+}
+
+.profile-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #FF3EA5;
+    outline: none;
+}
+
+.btn-update {
+    background-color: #FF3EA5;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-update:hover {
+    background-color: #e73397;
+}

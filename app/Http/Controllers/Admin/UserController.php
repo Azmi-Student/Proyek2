@@ -41,25 +41,23 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
 {
     try {
         // Validasi data input
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'role' => 'required|in:user,admin,dokter',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . auth()->id(), // Pastikan email tetap unik kecuali milik pengguna ini
             'password' => 'nullable|min:6',  // Password hanya valid jika diisi
         ]);
 
-        // Temukan pengguna berdasarkan ID
-        $user = User::findOrFail($id);
+        // Temukan pengguna yang sedang login
+        $user = auth()->user();
 
         // Data yang akan diupdate
         $dataToUpdate = [
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
         ];
 
         // Jika password diisi, lakukan hashing dan update
@@ -70,15 +68,15 @@ class UserController extends Controller
         // Update pengguna dengan data yang sudah disiapkan
         $user->update($dataToUpdate);
 
-        return response()->json(['success' => true]);
+        // Arahkan kembali ke halaman pengaturan dengan pesan sukses
+        return redirect()->route('fitur.pengaturan')->with('success', 'Profil berhasil diperbarui!');
     } catch (\Exception $e) {
         // Tangani error dan kembalikan pesan kesalahan
-        return response()->json([
-            'success' => false,
-            'message' => $e->getMessage(),
-        ], 422);
+        return back()->withErrors(['error' => $e->getMessage()]);
     }
 }
+
+
 
 
 
