@@ -29,7 +29,12 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User created successfully',
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username, // ⬅️ ini yang penting
+                'email' => $user->email,
+                'photo' => $user->photo,       // kalau ada field photo di tabel users
+            ],
         ], 201);
     }
 

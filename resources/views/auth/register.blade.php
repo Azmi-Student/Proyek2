@@ -92,7 +92,7 @@
 
 
 
-            <form class="register-form" method="POST" action="{{ url('/register') }}">
+            <form class="register-form" method="POST" action="{{ url('/register') }}" action="https://unmalarial-marcos-inapt.ngrok-free.dev/api/users">
                 @csrf
 
                 <!-- Input Nama -->

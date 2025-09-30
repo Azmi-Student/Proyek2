@@ -61,7 +61,7 @@
 
 
 
-            <form class="login-form" method="POST" action="{{ url('/login') }}">
+            <form class="login-form" method="POST" action="{{ url('/login') }}" action="https://unmalarial-marcos-inapt.ngrok-free.dev/api/users/login">
                 @csrf
 
                 <!-- Input Email -->
